@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/springnote?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: mysql
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+    cache: false
+  resources:
+    static-locations: classpath:/templates/ # 可以直接访问目录下的html
+
+
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath:com/spring/test/chapter6/*.xml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include : "*"
+
+logging:
+  level:
+#    root: debug
+    com.spring.test.chapter6: debug
