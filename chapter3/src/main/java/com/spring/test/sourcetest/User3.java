@@ -1,4 +1,4 @@
-package com.spring.test.chapter3;
+package com.spring.test.sourcetest;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

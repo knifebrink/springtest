@@ -1,6 +1,5 @@
-package com.spring.test.chapter3;
+package com.spring.test.sourcetest;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

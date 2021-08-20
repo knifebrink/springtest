@@ -1,6 +1,5 @@
-package com.spring.test.chapter3;
+package com.spring.test.sourcetest;
 
-import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -13,10 +12,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class IocTest1 {
     public static final Logger LOGGER = LoggerFactory.getLogger("fch");
     public static void main(String[] args){
-//        test1();
+        test1();
 //        test2();
 //        test3();
-        test4();
+//        test4();
     }
 
     // 使用@bean方法进行装载

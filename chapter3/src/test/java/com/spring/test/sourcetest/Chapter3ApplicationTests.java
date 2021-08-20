@@ -1,4 +1,4 @@
-package com.spring.test.chapter3;
+package com.spring.test.sourcetest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
