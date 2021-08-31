@@ -1,4 +1,4 @@
-package com.spring.test.sourcetest;
+package com.spring.test.springtest;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

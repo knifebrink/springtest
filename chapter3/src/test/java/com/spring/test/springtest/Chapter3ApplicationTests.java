@@ -1,4 +1,4 @@
-package com.spring.test.sourcetest;
+package com.spring.test.springtest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

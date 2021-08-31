@@ -1,4 +1,4 @@
-package com.spring.test.sourcetest;
+package com.spring.test.springtest;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

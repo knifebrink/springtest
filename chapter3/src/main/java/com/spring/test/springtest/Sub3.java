@@ -1,4 +1,4 @@
-package com.spring.test.sourcetest;
+package com.spring.test.springtest;
 
 import org.springframework.stereotype.Component;
 

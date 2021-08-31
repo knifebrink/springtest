@@ -1,4 +1,4 @@
-package com.spring.test.sourcetest.controller;
+package com.spring.test.springtest.controller;
 
 import lombok.Data;
 

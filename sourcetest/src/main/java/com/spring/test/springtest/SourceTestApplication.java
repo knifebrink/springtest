@@ -1,11 +1,10 @@
-package com.spring.test.sourcetest;
+package com.spring.test.springtest;
 
 //import com.spring.test.sourcetest.controller.TestController;
-import com.spring.test.sourcetest.controller.User;
+import com.spring.test.springtest.controller.User;
 import org.springframework.asm.ClassReader;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectFactory;
-import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.*;
@@ -23,10 +22,7 @@ import org.springframework.core.SpringVersion;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.classreading.*;
 
-import org.springframework.lang.Nullable;
-
 import java.lang.reflect.Constructor;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -139,7 +135,7 @@ public class SourceTestApplication {
 
 
 
-//		context.stop();
+		context.stop();
 
 	}
 
