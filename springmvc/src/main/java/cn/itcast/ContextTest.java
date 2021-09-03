@@ -1,9 +1,13 @@
 package cn.itcast;
 
 import cn.itcast.controller.HelloSsmController;
+import cn.itcast.controller.ItemsController;
 import cn.itcast.dao.ItemsMapper;
+import cn.itcast.dao.SayingXmlMapper;
+import cn.itcast.domain.Items;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.validation.support.BindingAwareModelMap;
 
 /**
  * @author brink
@@ -18,5 +22,15 @@ public class ContextTest {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml","spring-mvc.xml");
         System.out.println("测试容器类："+applicationContext.getBean(HelloSsmController.class));
         System.out.println("测试容器类："+applicationContext.getBean(ItemsMapper.class));
+        ItemsController itemsController = applicationContext.getBean(ItemsController.class);
+        System.out.println("尝试调用接口："+itemsController.list(new BindingAwareModelMap()));
+//        ItemsMapper itemsMapper = applicationContext.getBean(ItemsMapper.class);
+//        Items items = new Items();
+//        items.setId(5);
+//        items.setDetail("123");
+//        itemsMapper.insert(items);
+//        SayingXmlMapper sayingXmlMapper = applicationContext.getBean(SayingXmlMapper.class);
+//        sayingXmlMapper.selectAll();
+
     }
 }

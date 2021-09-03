@@ -29,10 +29,10 @@ public class ItemsController {
 	public String list(Model model){
 
 		List<Items> list = itemsService.findAll();
-		System.out.println("_____"+list.size());
+		System.out.println("_____"+list.size()+"-----");
 		model.addAttribute("itemsList", list);
 
-		return "itemsList";
+		return "redirect:/itemsList.jsp";
 
 	}
 	//跳转到修改页面
@@ -52,7 +52,7 @@ public class ItemsController {
 
 		itemsService.saveOrUpdate(items);
 
-		return "redirect:list.do";
+		return "redirect:list";
 	}
 
 	//根据Id进行删除
@@ -61,7 +61,7 @@ public class ItemsController {
 	{
 		itemsService.deleteByID(id);
 
-		return "redirect: list.do";
+		return "redirect: list";
 	}
 
 	//批量删除
@@ -74,7 +74,7 @@ public class ItemsController {
 		}
 
 
-		return "redirect: list.do";
+		return "redirect: list";
 	}
 
 

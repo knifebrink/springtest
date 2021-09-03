@@ -4,11 +4,15 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/context/spring-tx.xsd">
-
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/context/spring-tx.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd"
+>
     <context:component-scan base-package="cn.itcast"/>
     <!-- 第一步：配置数据源 -->
     <context:property-placeholder location="classpath:jdbc.properties" />
@@ -23,7 +27,6 @@
     <!-- 第二步：创建sqlSessionFactory。生产sqlSession -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
-
     </bean>
     <!-- 配置mybatis接口代理开发
 		* 接口类名和映射文件必须同名
@@ -35,4 +38,23 @@
         <property name="basePackage" value="cn.itcast.dao"></property>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
+    <!-- 第三步：事务 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+<!--    &lt;!&ndash;配置通知&ndash;&gt;-->
+<!--    <tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+<!--        <tx:attributes>-->
+<!--            <tx:method name="save*" propagation="REQUIRED" />-->
+<!--            <tx:method name="update*" propagation="REQUIRED" />-->
+<!--            <tx:method name="delete*" propagation="REQUIRED" />-->
+<!--            <tx:method name="insert*" propagation="REQUIRED" />-->
+<!--            <tx:method name="*" propagation="REQUIRED" />-->
+<!--        </tx:attributes>-->
+<!--    </tx:advice>-->
+<!--    &lt;!&ndash; 配置拦截service &ndash;&gt;-->
+<!--    <aop:config>-->
+<!--        <aop:advisor advice-ref="txAdvice" pointcut="execution(* cn.itcast.service.*.*(..))"/>-->
+<!--    </aop:config>-->
 </beans>

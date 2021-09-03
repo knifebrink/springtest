@@ -45,4 +45,16 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true">
     </aop:aspectj-autoproxy>
+
+    <mvc:interceptors>
+        <!--多个拦截器,顺序执行 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="cn.itcast.interceptor.Interceptor1"></bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="cn.itcast.interceptor.Interceptor2"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
