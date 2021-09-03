@@ -1,0 +1,10 @@
+#### springMvc的测试
+主要是为了了解清楚原理吧
+看着看着还挺有趣的
+从servlet回来，其实主要是由DispatcherServlet接收了所有的请求，然后再自己分发，利用web.xml中配置传递.xml参数，
+由springMvc内部自己去获取配置。进而进一步运用spring容器，将配置注入
+所以springMVC是基于spring的。
+
+而springboot更加简化了配置这一步
+
+springMVC感觉有助于理解mvc模式，真的主要拆分了视图层和控制层

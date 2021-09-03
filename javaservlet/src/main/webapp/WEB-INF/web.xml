@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+    http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<!--  web.xml 映射配置，讲给tomcat听-->
+  <servlet>
+    <!-- 类名 -->
+    <servlet-name>HelloServlet</servlet-name>
+    <!-- 所在的包 -->
+    <servlet-class>com.test.servlet.HelloServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HelloServlet</servlet-name>
+    <!-- 访问的网址 -->
+    <url-pattern>/javaservlet/HelloServlet</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <!-- 类名 -->
+    <servlet-name>HiServlet</servlet-name>
+    <!-- 所在的包 -->
+    <servlet-class>com.test.servlet.HelloServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HiServlet</servlet-name>
+    <!-- 访问的网址 -->
+    <url-pattern>/javaservlet/HiServlet</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>TestServlet</servlet-name>
+    <servlet-class>com.test.servlet.TestServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation_init</param-name>
+      <param-value>classpath:spring-mvc.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+<!--监听器-->
+  <listener>
+    <listener-class>com.test.servlet.TestServletContextListener</listener-class>
+  </listener>
+</web-app>
