@@ -1,5 +1,7 @@
-
-
-
 catalog:
   name: \@Value测试:application.yml里的值
+
+logging:
+  level:
+    #    root: debug
+    com.spring.test.springtest: error

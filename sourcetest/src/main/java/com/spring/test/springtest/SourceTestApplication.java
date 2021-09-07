@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -137,6 +138,11 @@ public class SourceTestApplication {
 
 		context.stop();
 
+	}
+
+	private static void test(String[] args){
+		ConfigurableApplicationContext context = SpringApplication.run(SourceTestApplication.class, args);
+		context.getBean("fad",User.class);
 	}
 
 }

@@ -9,6 +9,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.validation.support.BindingAwareModelMap;
 
+import java.util.logging.Logger;
+
 /**
  * @author brink
  * 2021/9/2 17:05
@@ -20,6 +22,7 @@ import org.springframework.validation.support.BindingAwareModelMap;
  *
  */
 public class ContextTest {
+    Logger logger = Logger.getLogger("fch");
     public static void main(String[] args){
         System.out.println("start");
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml","spring-mvc.xml");

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * 2021/7/6 11:29
  */
 @Data
-@Component("uss")
+@Component("user")
 public class User {
     private String id;
     private int count;

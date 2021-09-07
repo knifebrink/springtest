@@ -8,3 +8,5 @@
 而springboot更加简化了配置这一步
 
 springMVC感觉有助于理解mvc模式，真的主要拆分了视图层和控制层
+
+springMVC和spring是两回事
