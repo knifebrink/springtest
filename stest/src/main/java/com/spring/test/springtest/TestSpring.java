@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
@@ -26,7 +27,8 @@ public class TestSpring {
 
     // 测试看看不同的ApplicationContext接口实例有什么区别
     /**
-     * 根据以下的测试
+     * 根据以下的测试，不同的applicationContext主要是加载配置文件的方式不一样(如记录bean的.xml文件)
+     * 如下，有些不能直接使用.xml，有些不能使用注解，看名字就可以看出了。
      */
     @Test
     public void testSpring(){
@@ -40,6 +42,9 @@ public class TestSpring {
         User user = applicationContext.getBean(User.class);
         LOGGER.info("ancAC生成的："+user.toString()+"");
 
+        ClassPathXmlApplicationContext classPathXmlApplicationContext =
+                new ClassPathXmlApplicationContext("genericApplicationContext.xml");
+        LOGGER.info("cXAC生成的："+classPathXmlApplicationContext.getBean(User.class));
 
 
     }
