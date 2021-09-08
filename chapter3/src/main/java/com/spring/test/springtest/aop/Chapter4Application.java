@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 
 /**
  * @author brink
+ * 深入浅出的第四章
  * 2021/9/8 16:04
  */
 @SpringBootApplication(scanBasePackages = {"com.spring.test.springtest.aop"})
