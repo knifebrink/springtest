@@ -136,7 +136,7 @@ public class SourceTestApplication {
 
 
 
-		context.stop();
+//		context.stop();
 
 	}
 

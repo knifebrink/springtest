@@ -1,0 +1,18 @@
+logging:
+  level:
+#    root: debug
+    com.spring.test.springtest: debug
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/
+      suffix: .*
+thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+    cache: false
+
+resources:
+    static-locations: classpath:/templates/ # 可以直接访问目录下的html
