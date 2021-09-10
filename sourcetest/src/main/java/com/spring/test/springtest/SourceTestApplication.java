@@ -10,6 +10,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootVersion;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.context.ApplicationContext;
@@ -107,6 +108,12 @@ public class SourceTestApplication {
 	 * 当然还有懒加载、其他方式等，因为其spring的发展有更多的设置，后面可以熟悉业务后再看一遍。但
 	 * 整体的，可能就这样了。还有xml等方式等。xml构思是，先将xml预先编译成.class。
 	 * 还有自动装载，和带自动装载的参数等，挺多的。
+	 *
+	 * 更精炼
+	 * 1. 根据配置扫描bean
+	 * 2. 注册bean定义
+	 * 3. 反射初始化，并加入集合
+	 * 4. 取出
 	 */
 	public static void main(String[] args) {
 		System.out.println("Spring V:"+SpringVersion.getVersion());
@@ -135,8 +142,9 @@ public class SourceTestApplication {
 
 
 
-
 //		context.stop();
+		Object o = aContext.getBean(AutoConfigurationPackages.class.getName());// 扫描包供他人调用
+		System.out.println(""+o);
 
 	}
 

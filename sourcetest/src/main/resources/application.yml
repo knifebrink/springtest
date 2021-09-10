@@ -1,7 +1,9 @@
 logging:
   level:
 #    root: debug
+    org.springframework.beans.factory.support.DefaultListableBeanFactory: debug
     com.spring.test.springtest: debug
+
 
 spring:
   mvc:
@@ -16,3 +18,4 @@ thymeleaf:
 
 resources:
     static-locations: classpath:/templates/ # 可以直接访问目录下的html
+
