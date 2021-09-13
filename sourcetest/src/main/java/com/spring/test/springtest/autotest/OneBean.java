@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
  * 2021/9/10 19:18
  */
 @Component
-@Order
-public class OneBean {
+public class OneBean implements NumBean{
+    public OneBean(){
+        System.out.println("初始化成功:oneBean");
+    }
 }

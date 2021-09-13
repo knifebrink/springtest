@@ -12,7 +12,7 @@ public class ColorImportSelector implements ImportSelector {
 
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        return new String[] {Blue.class.getName(), Green.class.getName()};
+        return new String[] {Blue.class.getName(), Green.class.getName(),SelectorConfiguration.class.getName()};
     }
 
 }
