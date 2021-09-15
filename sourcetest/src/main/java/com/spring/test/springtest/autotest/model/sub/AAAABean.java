@@ -7,5 +7,5 @@ import org.springframework.stereotype.Component;
  * 2021/9/13 17:39
  */
 @Component
-public class AAAABean {
+public class AAAABean implements AAAAI{
 }

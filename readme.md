@@ -3,7 +3,7 @@
 * spring、springMVC、SpringBoot是三个东西
 * spring主要就是IOC容器和AOP
 * springMVC是java web开发的一个框架，依赖或基于spring
-* SpringBoot有点类似脚手架，继承和自动配置spring和springMVC，以及更方便继承其他框架
+* SpringBoot有点类似脚手架，继承和自动配置spring和springMVC，以及更方便集成其他框架
 
 
 

@@ -3,6 +3,7 @@ package com.spring.test.springtest;
 //import com.spring.test.sourcetest.controller.TestController;
 import com.spring.test.springtest.test.AllBeans;
 import com.spring.test.springtest.test.SimpleMovieLister;
+import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +26,9 @@ public class SourceTestApplication {
 		System.out.println(""+simpleMovieLister.user);
 		System.out.println("@Primary测试:"+context.getBean(AllBeans.class).userP);
 		System.out.println("@Value测试:"+context.getBean(AllBeans.class).valueTest);
+		System.out.println(""+context.getBean(AppConfig.class));
+
+
 
 		System.out.println("\nend---------\n");
 		context.stop();

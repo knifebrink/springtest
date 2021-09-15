@@ -12,5 +12,6 @@ import org.springframework.stereotype.Component;
 public class TwoBean  {
     public TwoBean(){
         System.out.println("bean初始化：twoBean");
+
     }
 }

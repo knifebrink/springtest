@@ -114,6 +114,8 @@ public class SourceTestApplication {
 	 * 2. 注册bean定义
 	 * 3. 反射初始化，并加入集合
 	 * 4. 取出
+	 *
+	 * 注：创建实例时有点像深度遍历，如果有装配依赖会先创建和装载依赖bean
 	 */
 	public static void main(String[] args) {
 		System.out.println("Spring V:"+SpringVersion.getVersion());

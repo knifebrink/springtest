@@ -2,6 +2,7 @@ package com.spring.test.springtest.autotest;
 
 
 import com.spring.test.springtest.autotest.model.ComScanTest;
+import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +14,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.Iterator;
 
 /**
@@ -27,7 +31,12 @@ import java.util.Iterator;
  * 另一个的作用是读取包里的spring.factories 类路径，并将其注入到工厂，并且应该都是@Configuration，然后会继续进行加载。
  * 例如{AutoConfigurationImportSelector} 下根据spring.factories返回全限定类名注册到工厂，包括{DispatcherServletAutoConfiguration}，
  * 然后其实用@Bean，依赖注入{@link DispatcherServlet}。
+ * 注：spring.factories 可以分散在其他jar，mybatis就是这样
  * XXXAutoConfiguration
+ *
+ * 以mybatis为例，自动装配是{@link MybatisAutoConfiguration}，然后再.jar包下有，spring.factories，所以会装载MybatisAutoConfiguration，
+ * 一般使用@MapperScan进行配置，如果没有的话，MybatisAutoConfiguration条件装载相关的配置，达到自动配置，且有手动配置时，就手动。
+ *
  * Spring 确实有点意思
  */
 
@@ -54,5 +63,15 @@ public class AutoTestApplication {
 
     private void fun(){
 //        MybatisAutoConfiguration.AutoConfiguredMapperScannerRegistrar autoConfiguredMapperScannerRegistrar;
+    }
+
+    private static void fff(){
+
+        try {
+            Enumeration<URL> urls =           ClassLoader.getSystemClassLoader().getResources( "META-INF/spring.factories");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
