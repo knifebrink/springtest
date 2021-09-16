@@ -14,7 +14,7 @@ spring:
   resources:
     static-locations: classpath:/templates/ # 可以直接访问目录下的html
   redis:
-    host: 47.106.155.1 # Redis服务器地址
+    host: 0.0.0.1 # Redis服务器地址
     port: 6379 # Redis服务器连接端口
     password: 123456 # Redis服务器连接密码（默认为空）
     jedis:
@@ -31,10 +31,11 @@ spring:
 #      cluster-nodes: 47.107.161.11:9300 # es的连接地址及端口号
 #      cluster-name: elasticsearch # es集群的名称
     mongodb:
-      host: 47.107.165.1 # mongodb的连接地址
+      host: 0.0.0.1 # mongodb的连接地址
       port: 27017 # mongodb的连接端口号
       database: mall-port # mongodb的连接的数据库
-
+#      password:
+#      username:
 
 mybatis:
   mapper-locations:
