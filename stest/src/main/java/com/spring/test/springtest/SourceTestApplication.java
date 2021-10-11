@@ -18,7 +18,6 @@ public class SourceTestApplication {
 
 		ConfigurableApplicationContext context = SpringApplication.run(SourceTestApplication.class, args);
 		System.out.println("start-------\n");
-
 		SimpleMovieLister simpleMovieLister = context.getBean(SimpleMovieLister.class);
 //		SimpleMovieLister simpleMovieLister = new SimpleMovieLister();
 //		context.getBeanFactory().registerSingleton("simpleMovieLister",simpleMovieLister);
