@@ -4,12 +4,20 @@ logging:
     org.springframework.beans.factory.support.DefaultListableBeanFactory: debug
     com.spring.test.springtest: debug
 
-
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath:com/spring/test/springtest/mybatistest/*.xml
 spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/springnote?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: mysql
   mvc:
     view:
       prefix: /WEB-INF/
       suffix: .*
+
 thymeleaf:
     prefix: classpath:/templates/
     suffix: .html

@@ -37,6 +37,5 @@ public class ContextTest {
 //        itemsMapper.insert(items);
 //        SayingXmlMapper sayingXmlMapper = applicationContext.getBean(SayingXmlMapper.class);
 //        sayingXmlMapper.selectAll();
-
     }
 }
