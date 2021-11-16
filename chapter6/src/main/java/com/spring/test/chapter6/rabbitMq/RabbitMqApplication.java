@@ -45,10 +45,10 @@ public class RabbitMqApplication {
 
         try {
             RabbitMqApplication rabbitMqApplication = applicationContext.getBean(RabbitMqApplication.class);
-//            rabbitMqApplication.sendEasyMessage();
+            rabbitMqApplication.sendEasyMessage();
 //            rabbitMqApplication.sendEasyMessage2();
 //            Thread.sleep(5000);
-            rabbitMqApplication.sendDelayMessage(1000);
+//            rabbitMqApplication.sendDelayMessage(1000);
 
         } catch (Exception e) {
             e.printStackTrace();
