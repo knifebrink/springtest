@@ -16,10 +16,12 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * redis测试
@@ -34,7 +36,9 @@ public class RedisApplication {
 	public static void main(String[] args) {
 		startSpringboot(args);
 //		startOne();
+		testSyn(args);
 	}
+
 
 	private static void startOne(){
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(RedisConfig.class);
@@ -48,6 +52,7 @@ public class RedisApplication {
 //		redisTemplate.opsForList()
 		useSessionCallback(redisTemplate);
 //		useRedisCallback(redisTemplate);
+		System.out.println(ctx.getBean(JedisPool.class));;
 		ctx.close();
 	}
 
@@ -135,10 +140,44 @@ public class RedisApplication {
 			public Object execute(RedisOperations redisOperations) throws DataAccessException {
 				redisOperations.opsForValue().set("key2", "value2");
 				redisOperations.opsForHash().put("hash1", "field2", "hvalue2");
+
 				return null;
 			}
 		});
 
 	}
 
+
+	/**
+	 * redis 分布式锁 测试
+	 * 关键点是，redis可以当成是线程安全的（因为单线程）
+	 * setex  设置值并设置有效时间，原子性操作
+	 * setnx 如果不存在设置值，并返回1；存在则不设置，并返回0
+	 *
+	 */
+	public static void testSyn(String[] args){
+		ConfigurableApplicationContext context = SpringApplication.run(RedisApplication.class,args);
+		RedisTemplate<Object,Object> redisTemplate = context.getBean("redisTemplate",RedisTemplate.class);// 多了一个stringRedisTemplate
+		// 设置值如果不存在，返回成功则进入同步，否则自旋，直到设置成功
+		// 需同步代码
+		// 运行代码段结束，清空值
+		for(int i = 0;i<100;i++){
+
+			IncreaseThread increaseThread = new IncreaseThread(){
+				@Override
+				public void run() {
+					redisTemplate.opsForValue().set("sync","1",1000, TimeUnit.SECONDS);
+					needSync();
+				}
+			};
+			increaseThread.start();
+		}
+		try {
+			// 等上面线程完成
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+		}
+		// 同步正确应该是100 * 1000
+		System.out.println("-----i:"+IncreaseThread.sum);
+	}
 }	

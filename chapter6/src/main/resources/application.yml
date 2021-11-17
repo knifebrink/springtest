@@ -24,16 +24,16 @@ spring:
         max-idle: 10 # 连接池中的最大空闲连接
         min-idle: 5 # 连接池中的最小空闲连接
     timeout: 1000 # 连接超时时间（毫秒）
-  data:
+#  data:
 #    elasticsearch:
 #      repositories:
 #        enabled: true
 #      cluster-nodes: 47.107.161.11:9300 # es的连接地址及端口号
 #      cluster-name: elasticsearch # es集群的名称
-    mongodb:
-      host: 0.0.0.1 # mongodb的连接地址
-      port: 27017 # mongodb的连接端口号
-      database: mall-port # mongodb的连接的数据库
+#    mongodb:
+#      host: 0.0.0.1 # mongodb的连接地址
+#      port: 27017 # mongodb的连接端口号
+#      database: mall-port # mongodb的连接的数据库
 #      password:
 #      username:
   rabbitmq:
@@ -57,6 +57,5 @@ management:
 
 logging:
   level:
-#    root: debug
+#    root: info
     com.spring.test.chapter6: debug
-
