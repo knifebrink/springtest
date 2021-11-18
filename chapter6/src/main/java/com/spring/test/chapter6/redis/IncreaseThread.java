@@ -6,6 +6,9 @@ package com.spring.test.chapter6.redis;
  */
 public class IncreaseThread extends Thread{
     public  static int sum = 0;
+    public IncreaseThread(){
+        super("IncreaseThread");
+    }
     @Override
     public void run() {
         needSync();

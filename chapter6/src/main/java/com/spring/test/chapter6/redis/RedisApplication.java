@@ -8,20 +8,16 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 import javax.annotation.PostConstruct;
-import javax.swing.*;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * redis测试
@@ -34,9 +30,13 @@ import java.util.concurrent.TimeUnit;
 @SpringBootApplication
 public class RedisApplication {
 	public static void main(String[] args) {
-		startSpringboot(args);
+//		startSpringboot(args);
 //		startOne();
-		testSyn(args);
+		try {
+			testSyn(args);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -125,6 +125,7 @@ public class RedisApplication {
 	    redisTemplate.execute((RedisConnection rc) -> {
 	        rc.set("key1".getBytes(), "value1".getBytes());
 	        rc.hSet("hash".getBytes(), "field".getBytes(), "hvalue".getBytes());
+
 	        return null;
 	    });
 	}
@@ -151,33 +152,89 @@ public class RedisApplication {
 	/**
 	 * redis 分布式锁 测试
 	 * 关键点是，redis可以当成是线程安全的（因为单线程）
+	 * 1. redis 线程安全。2. redis执行的命令需要保证原子性
 	 * setex  设置值并设置有效时间，原子性操作
 	 * setnx 如果不存在设置值，并返回1；存在则不设置，并返回0
 	 *
+	 * 测试结论，synchronized是真的快，100个线程只要十几秒
+	 * 而redis自旋，得要两秒钟，怎么这么长，可能是redisTemplate每次操作都需要重新连接的问题，可以直接用底层去搞
+	 * 但明白原理，先不管了。
+	 * 可以用redis框架
+	 * https://blog.csdn.net/qq_35190492/article/details/105499233
+	 * @see <a href="https://redis.io/commands/set">Redis Documentation: SET</a>
 	 */
-	public static void testSyn(String[] args){
+	public static void testSyn(String[] args) throws Exception{
 		ConfigurableApplicationContext context = SpringApplication.run(RedisApplication.class,args);
 		RedisTemplate<Object,Object> redisTemplate = context.getBean("redisTemplate",RedisTemplate.class);// 多了一个stringRedisTemplate
 		// 设置值如果不存在，返回成功则进入同步，否则自旋，直到设置成功
 		// 需同步代码
 		// 运行代码段结束，清空值
+		long time2 = System.currentTimeMillis();
+		redisTemplate.opsForValue().setIfAbsent("kkkkk","11");
+		System.out.println("一个操作时间："+(System.currentTimeMillis() - time2));
+		ReentrantLock reentrantLock = new ReentrantLock();
 		for(int i = 0;i<100;i++){
-
 			IncreaseThread increaseThread = new IncreaseThread(){
 				@Override
 				public void run() {
-					redisTemplate.opsForValue().set("sync","1",1000, TimeUnit.SECONDS);
+					redisLock(redisTemplate);
+
+//					reentrantLock.lock();
 					needSync();
+//					reentrantLock.unlock();
+					redisUnLock(redisTemplate);
 				}
 			};
 			increaseThread.start();
 		}
-		try {
-			// 等上面线程完成
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
+		long time = System.currentTimeMillis();
+		// 判断是否所有线程执行完毕
+		while(System.currentTimeMillis()-time<10000){
+			Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
+			int count = 0;
+			for(Thread thread:map.keySet()){
+				if(thread.getName().equals("IncreaseThread")){
+					count++;
+					break;
+				}
+			}
+			if(count==0)
+				break;
+			Thread.sleep(30);
+
 		}
+		System.out.println("所计算的时间："+(System.currentTimeMillis() - time));
+
+		// 等上面线程完成
+//		Thread.sleep(5000);
+
 		// 同步正确应该是100 * 1000
 		System.out.println("-----i:"+IncreaseThread.sum);
+		context.stop();
+
 	}
+
+	// 只用了setnx指令 ，怎么改进呢，这样的问题就在于，由于各种原因，没有释放锁的键值(del)，那就永远进不去了
+	// 如果在用setex指令，就不能保证原子性了吧
+	// redisson
+	private static void redisLock(RedisTemplate<Object,Object> redisTemplate){
+		while(true){
+			// setnx
+			Boolean b = redisTemplate.opsForValue().setIfAbsent("kkk", "1");
+//			Boolean b = redisTemplate.opsForValue().setIfAbsent("kkk", "1",10, TimeUnit.SECONDS);
+			if(b!=null&&b)// 不存在值则上锁
+				break;
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void redisUnLock(RedisTemplate<Object,Object> redisTemplate){
+		redisTemplate.delete("kkk");
+	}
+
+
 }	
