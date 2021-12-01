@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/context/spring-tx.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <bean id="user" class="com.spring.test.springtest.springtest.SpringUser">
+        <property name="id" value="这是xml注入的"/>
+        <property name="userName" value="这是xml注入的"/>
+    </bean>
+
+    <!--    &lt;!&ndash;配置通知&ndash;&gt;-->
+    <!--    <tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+    <!--        <tx:attributes>-->
+    <!--            <tx:method name="save*" propagation="REQUIRED" />-->
+    <!--            <tx:method name="update*" propagation="REQUIRED" />-->
+    <!--            <tx:method name="delete*" propagation="REQUIRED" />-->
+    <!--            <tx:method name="insert*" propagation="REQUIRED" />-->
+    <!--            <tx:method name="*" propagation="REQUIRED" />-->
+    <!--        </tx:attributes>-->
+    <!--    </tx:advice>-->
+    <!--    &lt;!&ndash; 配置拦截service &ndash;&gt;-->
+    <!--    <aop:config>-->
+    <!--        <aop:advisor advice-ref="txAdvice" pointcut="execution(* cn.itcast.service.*.*(..))"/>-->
+    <!--    </aop:config>-->
+</beans>

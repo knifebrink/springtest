@@ -32,15 +32,15 @@ public class TestSpring {
      */
     @Test
     public void testSpring(){
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        User user = applicationContext.getBean(User.class);
+        LOGGER.info("ancAC生成的："+user.toString()+"");
+
         GenericApplicationContext genericApplicationContext = new GenericApplicationContext();
         XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(genericApplicationContext);
         xmlReader.loadBeanDefinitions(new ClassPathResource("genericApplicationContext.xml"));
         genericApplicationContext.refresh();
         LOGGER.info("genericAC生成的：" + genericApplicationContext.getBean(User.class).toString());
-
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
-        User user = applicationContext.getBean(User.class);
-        LOGGER.info("ancAC生成的："+user.toString()+"");
 
         ClassPathXmlApplicationContext classPathXmlApplicationContext =
                 new ClassPathXmlApplicationContext("genericApplicationContext.xml");
