@@ -7,6 +7,10 @@ package com.spring.test.springtest.springtest;
 public class School {
     private SpringUser springUser;
     private SpringUser setterSpringUser;
+
+//    public School(){
+//        System.out.println("初始化school:---------");
+//    }
     public School(SpringUser springUser){
         this.springUser = springUser;
         System.out.println("初始化school:---------"+springUser);

@@ -21,7 +21,8 @@ public class SpringFrameworkTest {
     public static final Logger LOGGER = LoggerFactory.getLogger("fch");
     public static void main(String[] args){
 //        testSpring();
-        testSpringSource();
+//        testSpringSource();
+        testSpringThreeSource();
     }
 
     /**
@@ -57,7 +58,15 @@ public class SpringFrameworkTest {
 
     public static void testSpringSource(){
         ClassPathXmlApplicationContext classPathXmlApplicationContext =
-                new ClassPathXmlApplicationContext("genericApplicationContextOther.xml");
-        classPathXmlApplicationContext.getBean(School.class);
+                new ClassPathXmlApplicationContext("genericApplicationContextSource.xml");
+//        classPathXmlApplicationContext.getBean(School.class);
+    }
+
+    /**
+     * 三级缓存主要是解决循环依赖，和AOP代理自调用
+     */
+    public static void testSpringThreeSource(){
+        ClassPathXmlApplicationContext classPathXmlApplicationContext =
+                new ClassPathXmlApplicationContext("genericApplicationContextSource2.xml");
     }
 }

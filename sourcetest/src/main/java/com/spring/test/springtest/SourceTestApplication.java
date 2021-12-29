@@ -3,6 +3,7 @@ package com.spring.test.springtest;
 //import com.spring.test.sourcetest.controller.TestController;
 import com.spring.test.springtest.controller.User;
 import org.springframework.asm.ClassReader;
+import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -61,7 +62,19 @@ public class SourceTestApplication {
 	 * 3. 转向父类doGetBean()
 	 * 4. DefaultSingletonBeanRegistry中的singletonObjects集合中获取实例bean
 	 */
-
+	/**
+	 * 2021-12-1 补充
+	 * 在第8.步时，如果构造器带参数会走{@link AbstractAutowireCapableBeanFactory#autowireConstructor}
+	 * 然后会获取创建构造器参数中的类（走一遍创建流程），所以会先一步创建完毕，并进入SingleObjects集合中
+	 *
+	 * 在步骤12.步时，即当创建实例完毕，初始化后，会对bean的属性填充。{@link AbstractAutowireCapableBeanFactory#populateBean}
+	 * 如果bean有在容器中的其他对象依赖，会先进入此依赖对象的实例化、初始化、组装流程
+	 *
+	 * createBeanInstance：例化，其实也就是调用对象的构造方法实例化对象
+	 * populateBean：填充属性，这一步主要是对bean的依赖属性进行注入(@Autowired)
+	 * initializeBean：回到一些形如initMethod、InitializingBean等方法
+	 *
+	 */
 	/**
 	 * 扫描注册到，上面的前置
 	 * 1. {@link SpringApplication#run}

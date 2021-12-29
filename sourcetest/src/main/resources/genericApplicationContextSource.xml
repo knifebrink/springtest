@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/context/spring-tx.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <bean id="school" class="com.spring.test.springtest.springtest.School">
+<!--   构造器 注入     -->
+        <constructor-arg ref="user"/>
+<!--   setter 注入     -->
+<!--        <property name="setterSpringUser" ref="user2"/>-->
+    </bean>
+
+<!--    <bean id="highSchool"  class="com.spring.test.springtest.springtest.HighSchool">-->
+
+
+<!--    </bean>-->
+
+
+    <bean id="user" class="com.spring.test.springtest.springtest.SpringUser">
+        <property name="id" value="这是xml注入的"/>
+        <property name="userName" value="这是xml注入的"/>
+    </bean>
+
+    <bean id="user2" class="com.spring.test.springtest.springtest.SpringUser">
+        <property name="id" value="2"/>
+        <property name="userName" value="测试被setter注入"/>
+    </bean>
+
+
+
+</beans>

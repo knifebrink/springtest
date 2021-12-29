@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/context/spring-tx.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <bean id="dad" class="com.spring.test.springtest.springtest.Dad">
+
+<!--   setter 注入     -->
+        <property name="son" ref="son"/>
+    </bean>
+
+<!--    <bean id="highSchool"  class="com.spring.test.springtest.springtest.HighSchool">-->
+
+
+<!--    </bean>-->
+
+
+    <bean id="son" class="com.spring.test.springtest.springtest.Son">
+        <property name="dad" ref="dad"/>
+    </bean>
+
+
+
+
+</beans>

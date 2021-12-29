@@ -1,9 +1,10 @@
 package com.spring.test.springtest.lifecycle;
 
 import com.spring.test.springtest.lifecycle.LifeAppConfig;
+import org.springframework.beans.factory.*;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.beans.factory.BeanFactory;
-
+import javax.annotation.PostConstruct;
 /**
  * @author brink
  * 2021/9/8 9:05
@@ -12,6 +13,24 @@ import org.springframework.beans.factory.BeanFactory;
  * 在依赖注入后，可对bean进行一系列接口自定义初始化，可以去{@link BeanFactory}看所有的bean生命周期接口
  */
 public class LifeCycleTest {
+
+    /**
+     * 生命周期测试，以{@link BussinessPerson}作为测试
+     * 1. 实例化单例bean(包括bean的构造器)
+     * 2. 配置属性以及有依赖的bean进行依赖bean实例化
+     * 3. ->如果bean有实现{@link BeanNameAware}方法，则调用其方法
+     * 4. ->如果bean有实现{@link BeanFactoryAware}方法，
+     * 5. ->如果bean有实现其他*Aware方法，也调用其方法
+     * 6. 如果容器有注入{@link BeanPostProcessor}，则调前置处理postProcessBeforeInitialization()方法
+     * 6.5 如果有注解@PostConstruct，则调用其注解的方法。
+     * 7. 如果bean有实现{@link InitializingBean}，则调用其afterPropertiesSet()方法
+     * 8. 如果容器有注入{@link BeanPostProcessor},则调用后置处理postProcessAfterInitialization()方法
+     * 9. 如果bean有实现入{@link DisposableBean},则执行其销毁方法
+     *
+     * 比较常用的@PostConstruct({@link PostConstruct})和@PreDestroy不在生命周期内，但大概执行是在6和7之间，9之前。
+     * https://www.cnblogs.com/zrtqsk/p/3735273.html
+     * https://blog.csdn.net/qq360694660/article/details/82877222 @PostConstruct注解
+     */
     public static void main(String[] args) {
 //        testOther();
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(LifeAppConfig.class);
