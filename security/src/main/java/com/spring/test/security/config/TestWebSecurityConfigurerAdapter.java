@@ -1,8 +1,12 @@
 package com.spring.test.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,8 +14,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
 
-@Configuration
+/**
+ * 用来定义WebSecurityConfigure，此类是一个抽象类，继承即默认方法
+ */
+//@Configuration
 public class TestWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+    /**
+     * 用于配置用户、角色、加密等
+     * @param auth AuthenticationManager构造器
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -30,6 +41,19 @@ public class TestWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapt
         System.out.println("BC加密："+passwordEncoder.encode("abc"));
 //        System.out.println(""+auth.getDefaultUserDetailsService().loadUserByUsername("user").getUsername());
 //        super.configure(auth);
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        super.configure(web);
+    }
+
+    /**
+     *
+     */
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        super.configure(http);
     }
 
     @PostConstruct
