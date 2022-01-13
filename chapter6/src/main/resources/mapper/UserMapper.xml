@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress SqlResolve -->
 <mapper namespace="com.spring.test.chapter6.UserMapper">
     <select id="selectUser" resultType="com.spring.test.chapter6.User">
         select * from test_user
