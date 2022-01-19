@@ -30,4 +30,6 @@ public interface UserMapper2 {
      * 只简单测试，可带参数
      */
     List<User> selectUserSqlInclude();
+
+
 }
