@@ -3,29 +3,29 @@
 <!--suppress SqlResolve, SqlDialectInspection-->
 <mapper namespace="com.spring.test.chapter6.mybatis.UserMapper2">
 
-    <resultMap id="userResultMap" type="com.spring.test.chapter6.User">
+    <resultMap id="userResultMap" type="com.spring.test.chapter6.chapter6.User">
         <id property="id" column="id"/>
         <result property="userName" column="userName"/>
     </resultMap>
-    <select id="selectUser" resultType="com.spring.test.chapter6.User">
+    <select id="selectUser" resultType="com.spring.test.chapter6.chapter6.User">
         select * from test_user
     </select>
 
-    <insert id="insertUser" parameterType = "com.spring.test.chapter6.User" >
+    <insert id="insertUser" parameterType = "com.spring.test.chapter6.chapter6.User" >
         insert into test_user(id, userName,count)
         values(null, #{userName}, #{count})
     </insert>
 
 
 
-    <update id="updateUser" parameterType = "com.spring.test.chapter6.User">
+    <update id="updateUser" parameterType = "com.spring.test.chapter6.chapter6.User">
         update test_user
         SET
             userName = #{userName},
             count = #{count}
         WHERE id = #{id}
     </update>
-    <select id="selectUserById" resultType="com.spring.test.chapter6.User" parameterType="java.lang.String" >
+    <select id="selectUserById" resultType="com.spring.test.chapter6.chapter6.User" parameterType="java.lang.String" >
         select * from test_user where id = #{id}
     </select>
 
@@ -35,7 +35,7 @@
     </select>
 
     <!--使用IF标签-->
-    <select id="selectUserIf" parameterType="java.lang.Integer" resultType="com.spring.test.chapter6.User">
+    <select id="selectUserIf" parameterType="java.lang.Integer" resultType="com.spring.test.chapter6.chapter6.User">
         select * from test_user
         <if test="id == 1">
             order by count
@@ -44,7 +44,7 @@
     </select>
 
 <!--  foreach标签测试 需要输入一个集合  -->
-    <select id="selectUserForEach" parameterType="java.util.List" resultType="com.spring.test.chapter6.User">
+    <select id="selectUserForEach" parameterType="java.util.List" resultType="com.spring.test.chapter6.chapter6.User">
         select * from test_user
         where id in
         <foreach collection="list"  index="index" item="item" separator="," open="(" close=")">
@@ -57,7 +57,7 @@
     <sql id="test_sql">
         order by id limit 3
     </sql>
-    <select id="selectUserSqlInclude" resultType="com.spring.test.chapter6.User">
+    <select id="selectUserSqlInclude" resultType="com.spring.test.chapter6.chapter6.User">
         select * from test_user <include refid="test_sql" />
     </select>
 

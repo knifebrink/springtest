@@ -1,4 +1,4 @@
-package com.spring.test.chapter6;
+package com.spring.test.chapter6.chapter6;
 
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,4 +1,4 @@
-package com.spring.test.chapter6;
+package com.spring.test.chapter6.chapter6;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

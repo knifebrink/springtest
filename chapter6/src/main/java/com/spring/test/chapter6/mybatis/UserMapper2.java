@@ -1,6 +1,6 @@
 package com.spring.test.chapter6.mybatis;
 
-import com.spring.test.chapter6.User;
+import com.spring.test.chapter6.chapter6.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

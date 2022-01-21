@@ -6,7 +6,7 @@ package com.spring.test.chapter6.chapter10;
  */
 /**** imports ****/
 
-import com.spring.test.chapter6.User;
+import com.spring.test.chapter6.chapter6.User;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

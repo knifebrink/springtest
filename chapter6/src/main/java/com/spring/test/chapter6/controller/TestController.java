@@ -1,9 +1,7 @@
 package com.spring.test.chapter6.controller;
 
-import com.spring.test.chapter6.User;
-import com.spring.test.chapter6.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.spring.test.chapter6.chapter6.User;
+import com.spring.test.chapter6.chapter6.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,6 +1,5 @@
-package com.spring.test.chapter6;
+package com.spring.test.chapter6.chapter6;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;

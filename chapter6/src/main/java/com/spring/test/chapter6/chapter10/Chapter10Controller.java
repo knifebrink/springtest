@@ -1,8 +1,6 @@
 package com.spring.test.chapter6.chapter10;
 
-import com.spring.test.chapter6.User;
-import com.spring.test.chapter6.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spring.test.chapter6.chapter6.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
