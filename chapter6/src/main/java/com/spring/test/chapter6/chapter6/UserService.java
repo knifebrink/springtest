@@ -24,8 +24,8 @@ public class UserService {
 //        int a=  1/0;
     }
 
-    public void selectUser(){
-
+    public User selectUser(){
+        return userMapper.selectUserById(1+"");
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)

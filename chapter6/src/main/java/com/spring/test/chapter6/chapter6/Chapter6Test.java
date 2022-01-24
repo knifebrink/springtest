@@ -1,8 +1,10 @@
 package com.spring.test.chapter6.chapter6;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -14,6 +16,7 @@ import java.util.List;
  * 2021/7/6 14:26
  */
 @RunWith(SpringRunner.class)
+@Slf4j
 @SpringBootTest(classes = Chapter6Application.class)
 public class Chapter6Test {
     @Autowired
@@ -86,5 +89,13 @@ public class Chapter6Test {
         int count = userBatch.insertUsers(userList);
         System.out.println("批量加入："+count);
         // 测试提示：将日志调到debug，看日志
+    }
+
+    @Value("${fch.ddd}")
+    private String aaa;
+    @Test
+    public void testInclue(){
+        log.info("这是一个测试值：{}",aaa);
+        log.info("这是一个查询：{}",userService.selectUser());
     }
 }
