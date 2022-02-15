@@ -38,5 +38,7 @@ public class MybatisApplication {
         list.add("3");
         logger.warn("这是测试foreach标签：{}",userMapper2.selectUserForEach(list));
         logger.warn("这是测试sql标签：{}",userMapper2.selectUserSqlInclude());
+        logger.warn("这是测试collection标签：{}",userMapper2.selectUserTestCollection());
+
     }
 }

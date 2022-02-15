@@ -7,6 +7,9 @@
         <id property="id" column="id"/>
         <result property="userName" column="userName"/>
     </resultMap>
+
+
+
     <select id="selectUser" resultType="com.spring.test.chapter6.chapter6.User">
         select * from test_user
     </select>
@@ -59,6 +62,20 @@
     </sql>
     <select id="selectUserSqlInclude" resultType="com.spring.test.chapter6.chapter6.User">
         select * from test_user <include refid="test_sql" />
+    </select>
+
+    <resultMap id="userInListMap" type="com.spring.test.chapter6.mybatis.UserInList">
+        <id property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <collection property="moneyList" javaType="java.util.ArrayList" ofType="com.spring.test.chapter6.mybatis.UserMoney2">
+            <id column="moneyId" property="moneyId" jdbcType="INTEGER" />
+            <result column="money" property="money" jdbcType="INTEGER" />
+            <result column="userId" property="userId" jdbcType="INTEGER" />
+        </collection>
+    </resultMap>
+<!--  测试collection  -->
+    <select id="selectUserTestCollection" resultMap="userInListMap">
+        select a.*,b.moneyId, b.money ,b.userId from test_user a left join test_user_money_2 b on a.id = b.userId
     </select>
 
 

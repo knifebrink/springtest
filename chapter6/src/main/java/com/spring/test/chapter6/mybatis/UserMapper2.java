@@ -31,5 +31,14 @@ public interface UserMapper2 {
      */
     List<User> selectUserSqlInclude();
 
+    /**
+     * collection测试
+     * 主要是主对多的查询，例如主表里包含一个List，不需要写list的查询语句，只建立映射即可
+     * @return
+     * https://blog.csdn.net/lzxomg/article/details/89739651
+     * https://blog.csdn.net/minpann/article/details/51217106
+     */
+    List<UserInList> selectUserTestCollection();
+
 
 }

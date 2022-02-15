@@ -15,9 +15,9 @@ spring:
   resources:
     static-locations: classpath:/templates/ # 可以直接访问目录下的html
   redis:
-    host: 0.0.0.1 # Redis服务器地址
+    host: www.knifebrink.com # Redis服务器地址
     port: 6379 # Redis服务器连接端口
-    password: 123456 # Redis服务器连接密码（默认为空）
+    password: redis456 # Redis服务器连接密码（默认为空）
     jedis:
       pool:
         max-active: 10 # 连接池最大连接数（使用负值表示没有限制）
@@ -38,7 +38,7 @@ spring:
 #      password:
 #      username:
   rabbitmq:
-    host: 0.0.0.1 # rabbitmq的连接地址
+    host: www.knifebrink.com # rabbitmq的连接地址
     port: 5672 # rabbitmq的连接端口号
     virtual-host: /mall # rabbitmq的虚拟host
     username: 0 # rabbitmq的用户名
