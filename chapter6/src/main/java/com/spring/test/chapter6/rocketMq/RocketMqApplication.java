@@ -1,6 +1,7 @@
 package com.spring.test.chapter6.rocketMq;
 
 import com.spring.test.chapter6.rabbitMq.RabbitMqApplication;
+import com.spring.test.chapter6.utils.SpringBootApplicationNoDataSources;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -35,7 +36,7 @@ public class RocketMqApplication {
 
     @PostConstruct
     public void fun(){
-        boolean result = producerService.send("demo1", "TAG-A", "Hello RocketMQ");
+        boolean result = producerService.send("demo-topic", "demo-TAG", "Hello RocketMQ");
         log.info("发送：{}",result);
     }
 }

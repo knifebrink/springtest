@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.nio.charset.Charset;
 
 @Service
 public class ProducerService {
@@ -18,7 +19,7 @@ public class ProducerService {
         producer = new DefaultMQProducer("defaultGroup");
         producer.setNamesrvAddr("120.76.142.156:9876");
         producer.setRetryTimesWhenSendFailed(3);
-
+        producer.setSendMsgTimeout(30000);
         try {
             producer.start();
         } catch (MQClientException e) {

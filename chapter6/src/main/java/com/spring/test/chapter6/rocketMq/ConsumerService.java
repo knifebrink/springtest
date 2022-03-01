@@ -22,14 +22,16 @@ public class ConsumerService {
         consumer = new DefaultMQPushConsumer("defaultGroup");
         consumer.setNamesrvAddr("120.76.142.156:9876");
         try {
-            consumer.subscribe("demo1", "*");
+            consumer.subscribe("demo-topic", "*");
             consumer.registerMessageListener(new MessageListenerConcurrently() {
 
                 @Override
                 public ConsumeConcurrentlyStatus consumeMessage(
                         List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
                     for (MessageExt msg : msgs) {
+
                         System.out.println("Message Received: " + new String(msg.getBody()));
+                        System.out.println("Message Received Topic: " + msg.getTags()+" "+msg.getTopic() + " "+msg.getKeys());
 
                     }
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
