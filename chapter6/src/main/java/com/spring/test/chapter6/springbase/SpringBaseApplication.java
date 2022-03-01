@@ -25,5 +25,6 @@ public class SpringBaseApplication {
     public void AsyncTest(){
         asyncTest.doSomeThingAsync();
         asyncTest.doSomeThing();
+        asyncTest.doInMyself();
     }
 }
