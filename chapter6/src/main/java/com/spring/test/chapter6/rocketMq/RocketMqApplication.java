@@ -16,16 +16,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import javax.annotation.PostConstruct;
 
 @Slf4j
-@SpringBootApplication (exclude = {
-//      排除数据源
-        DataSourceAutoConfiguration.class,
-//        禁止mongodb自动装配
-        MongoAutoConfiguration.class,
-//        禁止redis自动装配
-        RedisAutoConfiguration.class,
-        RedisRepositoriesAutoConfiguration.class,
-//        禁止rabbitmq自动装配
-        RabbitAutoConfiguration.class})
+@SpringBootApplicationNoDataSources
 public class RocketMqApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext applicationContext =
@@ -37,6 +28,8 @@ public class RocketMqApplication {
     @PostConstruct
     public void fun(){
         boolean result = producerService.send("demo-topic", "demo-TAG", "Hello RocketMQ");
+        producerService.send("demo-topic", "demo-TAG", "这是第二条信息");
+
         log.info("发送：{}",result);
     }
 }

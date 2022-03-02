@@ -16,7 +16,7 @@ public class ProducerService {
 
     @PostConstruct
     public void initMQProducer() {
-        producer = new DefaultMQProducer("defaultGroup");
+        producer = new DefaultMQProducer("defaultProducerGroup");
         producer.setNamesrvAddr("120.76.142.156:9876");
         producer.setRetryTimesWhenSendFailed(3);
         producer.setSendMsgTimeout(30000);
