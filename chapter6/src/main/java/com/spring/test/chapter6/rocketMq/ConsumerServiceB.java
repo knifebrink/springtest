@@ -1,5 +1,7 @@
 package com.spring.test.chapter6.rocketMq;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.QueryResult;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -14,9 +16,11 @@ import javax.annotation.PreDestroy;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ConsumerServiceB {
 
     private DefaultMQPushConsumer consumer = null;
+    private DefaultMQPushConsumer consumer3 = null;
 
     @PostConstruct
     public void initMQConsumer() {
@@ -34,8 +38,9 @@ public class ConsumerServiceB {
                 public ConsumeConcurrentlyStatus consumeMessage(
                         List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
                     for (MessageExt msg : msgs) {
-                        System.out.println("B Message Received: " + new String(msg.getBody()));
-                        System.out.println("B Message Received Topic2: " + msg.getTags()+" "+msg.getTopic() + " "+msg.getKeys() +" " + msg.getMsgId());
+                        System.out.println("B Received: " + new String(msg.getBody()));
+                        log.info("thread: {}",Thread.currentThread());
+//                        System.out.println("B Message Received Topic2: " + msg.getTags()+" "+msg.getTopic() + " "+msg.getKeys() +" " + msg.getMsgId());
                     }
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
                 }
@@ -53,6 +58,28 @@ public class ConsumerServiceB {
     public void shutDownConsumer() {
         if (consumer != null) {
             consumer.shutdown();
+        }
+    }
+
+    /**
+     * 测试多个
+     */
+    @PostConstruct
+    private void fun(){
+        consumer3 = new DefaultMQPushConsumer("defaultGroup66");
+        consumer3.setInstanceName("defaultInstance_5");// 设置实例名
+        consumer3.setNamesrvAddr("120.76.142.156:9876");
+
+        try {
+
+            consumer3.subscribe("demo-topic", "*");
+
+            log.info("开始阻塞查询");
+            QueryResult queryResult = consumer3.queryMessage("demo-topic","",10,0,10);
+            log.info("阻塞查询：{}",queryResult);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -27,9 +27,30 @@ public class RocketMqApplication {
 
     @PostConstruct
     public void fun(){
+//        firstTest();
+        sendWhile();
+    }
+
+    public void firstTest(){
         boolean result = producerService.send("demo-topic", "demo-TAG", "Hello RocketMQ");
         producerService.send("demo-topic", "demo-TAG", "这是第二条信息");
 
         log.info("发送：{}",result);
+    }
+
+    /**
+     * 不断发送，测试可靠性
+     */
+    public void sendWhile()   {
+        for(int i = 0; i < 10; i++){
+
+//            boolean result = producerService.send("demo-topic", "demo-TAG", "i的值: "+i);
+//            log.info("发送：{}",result);
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+        }
     }
 }

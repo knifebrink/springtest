@@ -1,5 +1,6 @@
 package com.spring.test.chapter6.rocketMq;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -14,6 +15,7 @@ import javax.annotation.PreDestroy;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ConsumerService {
 
     private DefaultMQPushConsumer consumer = null;
@@ -33,8 +35,9 @@ public class ConsumerService {
                         List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
                     for (MessageExt msg : msgs) {
 
-                        System.out.println("Message Received: " + new String(msg.getBody()));
-                        System.out.println("Message Received Topic: " + msg.getTags()+" "+msg.getTopic() + " "+msg.getKeys());
+                        System.out.println("Received: " + new String(msg.getBody()));
+                        log.info("thread: {}",Thread.currentThread());
+//                        System.out.println("Received Topic: " + msg.getTags()+" "+msg.getTopic() + " "+msg.getKeys());
 
                     }
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
