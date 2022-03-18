@@ -1,5 +1,6 @@
 package com.spring.test.chapter6.mybatis;
 
+import com.spring.test.chapter6.chapter6.User;
 import com.spring.test.chapter6.redis.RedisApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,6 @@ public class MybatisApplication {
         logger.warn("这是测试foreach标签：{}",userMapper2.selectUserForEach(list));
         logger.warn("这是测试sql标签：{}",userMapper2.selectUserSqlInclude());
         logger.warn("这是测试collection标签：{}",userMapper2.selectUserTestCollection());
-
+        logger.warn("这是测试trim标签：{}",userMapper2.insertUserTestTrim(new User("啊啊啊",0)));
     }
 }

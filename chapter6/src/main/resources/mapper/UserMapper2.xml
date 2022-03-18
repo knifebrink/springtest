@@ -78,5 +78,25 @@
         select a.*,b.moneyId, b.money ,b.userId from test_user a left join test_user_money_2 b on a.id = b.userId
     </select>
 
+    <insert id="insertUserTestTrim" parameterType="com.spring.test.chapter6.chapter6.User" >
+        insert into test_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userName!=null">
+                userName,
+            </if>
+            <if test="count!=0">
+                count
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="userName!=null">
+                #{userName},
+            </if>
+            <if test="count!=0">
+                #{count}
+            </if>
+        </trim>
+    </insert>
+
 
 </mapper>

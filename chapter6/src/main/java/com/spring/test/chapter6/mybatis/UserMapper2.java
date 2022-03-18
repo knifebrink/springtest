@@ -40,5 +40,10 @@ public interface UserMapper2 {
      */
     List<UserInList> selectUserTestCollection();
 
+    /**
+     * trim测试 主要是拼接sql，有点类似单词的foreach，常用于插入
+     * https://blog.csdn.net/wt_better/article/details/80992014
+     */
+    Integer insertUserTestTrim(User user);
 
 }
