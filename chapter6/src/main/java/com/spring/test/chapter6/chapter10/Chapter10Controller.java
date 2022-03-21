@@ -39,6 +39,7 @@ public class Chapter10Controller {
     /***
      * 只是验证，但。。。还是能跑进去数值
      * 解析验证参数错误
+     * 验证数据
      * @param vp —— 需要验证的POJO，使用注解@Valid 表示验证
      * @param errors  错误信息，它由Spring MVC通过验证POJO后自动填充
      * @return 错误信息Map
