@@ -1,6 +1,7 @@
 package com.spring.test.chapter6.springbase;
 
 import com.spring.test.chapter6.rabbitMq.RabbitMqApplication;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,15 +15,23 @@ import javax.annotation.PostConstruct;
  * https://blog.csdn.net/xiaoxiaole0313/article/details/104666789
  */
 @SpringBootApplication
+@Slf4j
 public class SpringBaseApplication {
     public static void main(String[] args){
         SpringApplication.run(SpringBaseApplication.class,args);
+
     }
     @Autowired
     AsyncTest asyncTest;
+    @Autowired
+    AsyncTest2 asyncTest2;
 
     @PostConstruct
     public void AsyncTest(){
+        log.info("object: {}",asyncTest);
+        log.info("object: {}",(asyncTest.getClass()));
+
+        log.info("object: {}",asyncTest2);
         asyncTest.doSomeThingAsync();
         asyncTest.doSomeThing();
         asyncTest.doInMyself();
