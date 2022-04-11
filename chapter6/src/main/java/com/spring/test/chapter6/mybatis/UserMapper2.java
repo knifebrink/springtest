@@ -46,4 +46,7 @@ public interface UserMapper2 {
      */
     Integer insertUserTestTrim(User user);
 
+    List<User> selectUserChooseWhen(@Param("id") Integer id);
+
+
 }

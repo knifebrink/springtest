@@ -98,5 +98,18 @@
         </trim>
     </insert>
 
+    <!--使用IF标签-->
+    <select id="selectUserChooseWhen" parameterType="java.lang.Integer" resultType="com.spring.test.chapter6.chapter6.User">
+        select * from test_user
+        <choose>
+            <when test="id == 1">
+                where count = 55
+            </when>
+            <otherwise>
+                where count != 55
+            </otherwise>
+        </choose>
+        limit 3
+    </select>
 
 </mapper>
