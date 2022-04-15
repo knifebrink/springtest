@@ -73,7 +73,6 @@ public class ConsumerServiceB {
         try {
 
             consumer3.subscribe("demo-topic", "*");
-
             log.info("开始阻塞查询");
             QueryResult queryResult = consumer3.queryMessage("demo-topic","",10,0,10);
             log.info("阻塞查询：{}",queryResult);

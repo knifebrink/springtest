@@ -36,7 +36,7 @@ public class ConsumerService {
                     for (MessageExt msg : msgs) {
 
                         System.out.println("Received: " + new String(msg.getBody()));
-                        log.info("thread: {}",Thread.currentThread());
+//                        log.info("thread: {}",Thread.currentThread());
 //                        System.out.println("Received Topic: " + msg.getTags()+" "+msg.getTopic() + " "+msg.getKeys());
 
                     }

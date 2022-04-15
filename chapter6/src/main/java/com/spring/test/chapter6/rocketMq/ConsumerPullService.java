@@ -31,7 +31,7 @@ public class ConsumerPullService {
     public void initMQConsumer() {
         consumer = new DefaultMQPullConsumer("defaultGroup2");
         consumer.setNamesrvAddr("120.76.142.156:9876");
-        consumer.setInstanceName("consumer_pull_1");
+        consumer.setInstanceName("consumer_pull_4");
 //        consumer.setMessageModel(MessageModel.BROADCASTING);
         try {
             consumer.createTopic("","default-topic",10);
