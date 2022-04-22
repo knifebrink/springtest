@@ -25,12 +25,14 @@ public class ConsumerServiceB {
     @PostConstruct
     public void initMQConsumer() {
 
-        System.out.println("开启");
+        System.out.println("B 开启");
 
         consumer = new DefaultMQPushConsumer("defaultGroup4");
         consumer.setInstanceName("defaultInstance_4");// 设置实例名
         consumer.setNamesrvAddr("120.76.142.156:9876");
-//        consumer.setMessageModel(MessageModel.BROADCASTING);// 广播模式
+        consumer.setMessageModel(MessageModel.BROADCASTING);// 广播模式
+        consumer.setConsumeThreadMax(1);
+        consumer.setConsumeThreadMin(1);
         try {
             consumer.subscribe("demo-topic", "*");
             consumer.registerMessageListener(new MessageListenerConcurrently() {
@@ -39,7 +41,12 @@ public class ConsumerServiceB {
                         List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
                     for (MessageExt msg : msgs) {
                         System.out.println("B Received: " + new String(msg.getBody()));
-                        log.info("thread: {}",Thread.currentThread());
+//                        log.info("thread: {}",Thread.currentThread());
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
 //                        System.out.println("B Message Received Topic2: " + msg.getTags()+" "+msg.getTopic() + " "+msg.getKeys() +" " + msg.getMsgId());
                     }
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
@@ -64,7 +71,7 @@ public class ConsumerServiceB {
     /**
      * 测试多个
      */
-    @PostConstruct
+//    @PostConstruct
     private void fun(){
         consumer3 = new DefaultMQPushConsumer("defaultGroup66");
         consumer3.setInstanceName("defaultInstance_5");// 设置实例名

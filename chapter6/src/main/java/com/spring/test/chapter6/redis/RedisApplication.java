@@ -1,9 +1,14 @@
 package com.spring.test.chapter6.redis;
 
+import com.spring.test.chapter6.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.dao.DataAccessException;
@@ -27,16 +32,15 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * 参考：深入浅出springboot 第十章
  */
-@SpringBootApplication
+@Slf4j
+@SpringBootApplication(exclude = {        MongoAutoConfiguration.class})
 public class RedisApplication {
-	public static void main(String[] args) {
-//		startSpringboot(args);
+	public static void main(String[] args) throws Exception {
+		startSpringboot(args);
 //		startOne();
-		try {
-			testSyn(args);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		testSyn(args); // 分布式锁测试
+
+
 	}
 
 
@@ -236,5 +240,94 @@ public class RedisApplication {
 		redisTemplate.delete("kkk");
 	}
 
+
+
+	@Autowired
+	private RedissonClient redisson;
+
+	/**
+	 * redisson 分布式锁测试
+	 * https://blog.csdn.net/leijie0322/article/details/123348889
+	 */
+//	@PostConstruct
+	private void testRedissonLock() throws InterruptedException {
+		log.warn("{}",redisson);
+		String lockKey = "LOCK_KEY:1";
+		RLock rLock = redisson.getLock(lockKey);
+		rLock.lock(60000,TimeUnit.MILLISECONDS);
+		log.warn("上锁");
+//		boolean lockResult = rLock.tryLock(6000,TimeUnit.MILLISECONDS);
+//		log.warn("获取锁{}",lockResult);
+		new Thread(() -> {
+//			boolean result = false;
+//			try {
+//				RLock rLock1 = redisson.getLock(lockKey);
+//				result = rLock1.tryLock(5000, TimeUnit.MILLISECONDS);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			log.warn("线程获取锁{}",result);
+//			rLock.unlock();
+		}).start();
+		new Thread(() ->{
+			boolean result = true;
+			try {
+				RLock rLock1 = redisson.getLock(lockKey);
+				rLock1.lock(60000,TimeUnit.MILLISECONDS);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			log.warn("线程获取锁{}",result);
+			rLock.unlock();
+		}).start();
+		Thread.sleep(3000);
+//		rLock.unlock();
+		rLock.unlock();
+		log.warn("解锁");
+
+
+	}
+
+
+	/**
+	 * redisson锁计算测试
+	 */
+//	@PostConstruct
+	public void testRedissonLock2() throws InterruptedException {
+		String lockKey = "LOCK_KEY:2";
+		RLock rLock = redisson.getLock(lockKey);
+		log.warn("redisson锁计算测试");
+		IncreaseThread.sum = 0;
+		for(int i = 0;i<100;i++){
+			IncreaseThread increaseThread = new IncreaseThread(){
+				@Override
+				public void run() {
+					rLock.lock();
+
+
+					needSync();
+					rLock.unlock();
+
+				}
+			};
+			increaseThread.start();
+		}
+		long time = System.currentTimeMillis();
+		while(System.currentTimeMillis()-time<100000){
+			Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
+			int count = 0;
+			for(Thread thread:map.keySet()){
+				if(thread.getName().equals("IncreaseThread")){
+					count++;
+					break;
+				}
+			}
+			if(count==0)
+				break;
+			Thread.sleep(30);
+
+		}
+		log.warn("redisson锁计算 "+IncreaseThread.sum);
+	}
 
 }	

@@ -1,5 +1,6 @@
 package com.spring.test.chapter6.rocketMq;
 
+import cn.hutool.core.date.DateUtil;
 import com.spring.test.chapter6.rabbitMq.RabbitMqApplication;
 import com.spring.test.chapter6.utils.SpringBootApplicationNoDataSources;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import javax.annotation.PostConstruct;
+import java.util.Date;
 
 @Slf4j
 @SpringBootApplicationNoDataSources
@@ -44,13 +46,13 @@ public class RocketMqApplication {
     public void sendWhile()   {
         for(int i = 0; i < 10; i++){
 
-//            boolean result = producerService.send("demo-topic", "demo-TAG", "i的值: "+i);
-//            log.info("发送：{}",result);
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            boolean result = producerService.send("demo-topic", "demo-TAG", "i的值: "+i+" -----"+ DateUtil.format(new Date(),"yyyy/MM/dd HH:mm:ss"));
+            log.info("发送：{}",result);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

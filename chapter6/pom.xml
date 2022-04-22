@@ -126,6 +126,17 @@
 			<artifactId>hutool-all</artifactId>
 			<version>5.7.9</version>
 		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson-spring-boot-starter</artifactId>
+			<version>3.14.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
