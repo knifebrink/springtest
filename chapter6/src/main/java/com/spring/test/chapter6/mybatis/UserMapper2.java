@@ -33,6 +33,12 @@ public interface UserMapper2 {
     List<User> selectUserSqlInclude();
 
     /**
+     * 测试sql标签，sql标签有点类似于函数，可复用
+     * 只简单测试，可带参数
+     */
+    List<User> selectUserSqlIncludeWithParams(User user);
+
+    /**
      * collection测试
      * 主要是主对多的查询，例如主表里包含一个List，不需要写list的查询语句，只建立映射即可
      * @return

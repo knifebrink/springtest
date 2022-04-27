@@ -37,10 +37,11 @@ public class MybatisApplication {
         list.add("1");
         list.add("2");
         list.add("3");
-        logger.warn("这是测试foreach标签：{}",userMapper2.selectUserForEach(list));
-        logger.warn("这是测试sql标签：{}",userMapper2.selectUserSqlInclude());
-        logger.warn("这是测试collection标签：{}",userMapper2.selectUserTestCollection());
-        logger.warn("这是测试trim标签：{}",userMapper2.insertUserTestTrim(new User("啊啊啊",0)));
-        logger.warn("这是测试chooseWhen标签：{}",userMapper2.selectUserChooseWhen(2));
+//        logger.warn("这是测试foreach标签：{}",userMapper2.selectUserForEach(list));
+//        logger.warn("这是测试sql标签：{}",userMapper2.selectUserSqlInclude());
+//        logger.warn("这是测试collection标签：{}",userMapper2.selectUserTestCollection());
+//        logger.warn("这是测试trim标签：{}",userMapper2.insertUserTestTrim(new User("啊啊啊",0)));
+//        logger.warn("这是测试chooseWhen标签：{}",userMapper2.selectUserChooseWhen(2));
+        logger.warn("这是测试sql标签 带参数：{}",userMapper2.selectUserSqlIncludeWithParams(new User("aaa",2)));
     }
 }
