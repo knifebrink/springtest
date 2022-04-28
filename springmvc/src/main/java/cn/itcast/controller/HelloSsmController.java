@@ -16,7 +16,6 @@ public class HelloSsmController {
     @RequestMapping(value = "/test1")
     @ResponseBody
     public String test1() {
-
         System.out.println("this:"+this);
         return "this is test 1 , 因为中文乱码~";
     }
