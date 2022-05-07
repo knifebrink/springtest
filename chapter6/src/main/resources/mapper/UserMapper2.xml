@@ -119,4 +119,17 @@
         select * from test_user <include refid="test_sql_wit_params" />
     </select>
 
+    <sql id="test_sql_wit_params_2">
+        where count = ${prefix}
+        <include refid="${include_target}"/>
+    </sql>
+
+    <select id="selectUserSqlIncludeWithParams2" resultType="com.spring.test.chapter6.chapter6.User">
+        select * from test_user
+        <include refid="test_sql_wit_params_2" >
+            <property name="prefix" value="1"/>
+            <property name="include_target" value="test_sql"/>
+        </include>
+    </select>
+
 </mapper>

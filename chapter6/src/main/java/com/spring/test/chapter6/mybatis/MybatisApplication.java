@@ -42,6 +42,7 @@ public class MybatisApplication {
 //        logger.warn("这是测试collection标签：{}",userMapper2.selectUserTestCollection());
 //        logger.warn("这是测试trim标签：{}",userMapper2.insertUserTestTrim(new User("啊啊啊",0)));
 //        logger.warn("这是测试chooseWhen标签：{}",userMapper2.selectUserChooseWhen(2));
-        logger.warn("这是测试sql标签 带参数：{}",userMapper2.selectUserSqlIncludeWithParams(new User("aaa",2)));
+//        logger.warn("这是测试sql标签 带参数：{}",userMapper2.selectUserSqlIncludeWithParams(new User("aaa",2)));
+        logger.warn("这是测试sql标签 带参数2：{}",userMapper2.selectUserSqlIncludeWithParams2(new User("aaa",2)));
     }
 }
