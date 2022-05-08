@@ -2,6 +2,7 @@ package com.spring.test.chapter6.mybatis;
 
 import com.spring.test.chapter6.chapter6.User;
 import com.spring.test.chapter6.redis.RedisApplication;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,10 @@ public class MybatisApplication {
 //        logger.warn("这是测试chooseWhen标签：{}",userMapper2.selectUserChooseWhen(2));
 //        logger.warn("这是测试sql标签 带参数：{}",userMapper2.selectUserSqlIncludeWithParams(new User("aaa",2)));
         logger.warn("这是测试sql标签 带参数2：{}",userMapper2.selectUserSqlIncludeWithParams2(new User("aaa",2)));
+        sqlSessionTemplate.getConfiguration().getDefaultExecutorType();
+        logger.warn(""+sqlSessionTemplate.getExecutorType());
     }
+
+    @Autowired
+    SqlSessionTemplate sqlSessionTemplate;
 }

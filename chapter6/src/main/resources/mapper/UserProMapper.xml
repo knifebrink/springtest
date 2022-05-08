@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.test.chapter6.mybatis.UserProMapper">
+
+    <insert id="insertUser">
+        insert into test_pro_user(id,userName,count)
+        value(null,#{user.userName},#{user.count})
+    </insert>
+
+    <insert id="insertUserBatch">
+        insert into test_pro_user(id,userName,count)
+            value
+        <foreach collection="list" item="item" open="" separator="," close="">
+           ( null,#{item.userName},#{item.count})
+        </foreach>
+    </insert>
+
+</mapper>
