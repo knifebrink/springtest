@@ -61,5 +61,6 @@ public interface UserMapper2 {
 
     List<User> selectUserChooseWhen(@Param("id") Integer id);
 
+    Integer countTestLongSql(List<Long> list);
 
 }

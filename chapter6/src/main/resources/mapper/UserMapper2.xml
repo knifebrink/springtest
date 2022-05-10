@@ -132,4 +132,11 @@
         </include>
     </select>
 
+    <select id="countTestLongSql" resultType="java.lang.Integer">
+        select count(*) from test_user where id in
+        <foreach collection="list"  index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

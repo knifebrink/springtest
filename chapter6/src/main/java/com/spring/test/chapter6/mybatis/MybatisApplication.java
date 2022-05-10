@@ -18,7 +18,7 @@ import java.util.List;
  * @author brink
  * 2022/1/13 15:56
  */
-@SpringBootApplication(exclude = MongoAutoConfiguration.class)
+@SpringBootApplication(exclude = {MongoAutoConfiguration.class})
 public class MybatisApplication {
     public static void main(String[] args){
         SpringApplication.run(MybatisApplication.class,args);
@@ -45,8 +45,17 @@ public class MybatisApplication {
 //        logger.warn("这是测试chooseWhen标签：{}",userMapper2.selectUserChooseWhen(2));
 //        logger.warn("这是测试sql标签 带参数：{}",userMapper2.selectUserSqlIncludeWithParams(new User("aaa",2)));
         logger.warn("这是测试sql标签 带参数2：{}",userMapper2.selectUserSqlIncludeWithParams2(new User("aaa",2)));
+        testLongSql();
         sqlSessionTemplate.getConfiguration().getDefaultExecutorType();
         logger.warn(""+sqlSessionTemplate.getExecutorType());
+    }
+
+    private void testLongSql(){
+        List<Long> list = new ArrayList<>();
+        for(long i=0;i<10000000;i++){
+            list.add((long) Integer.MAX_VALUE);
+        }
+        logger.warn("这是测试超长sql：{}",userMapper2.countTestLongSql(list));
     }
 
     @Autowired
