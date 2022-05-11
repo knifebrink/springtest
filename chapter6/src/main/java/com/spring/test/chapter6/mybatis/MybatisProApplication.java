@@ -35,7 +35,7 @@ public class MybatisProApplication {
 
     @Autowired
     UserProMapper userProMapper;
-    @PostConstruct
+//    @PostConstruct
     public void fun(){
         test1();
         test2();
