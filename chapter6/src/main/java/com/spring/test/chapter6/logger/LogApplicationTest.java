@@ -1,5 +1,6 @@
 package com.spring.test.chapter6.logger;
 
+import com.spring.test.chapter6.utils.SpringBootApplicationNoDataSources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +21,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * 可用.yml进行设置，也可用元素的log-*.xml进行设置
  * 测试需要将logback-spring2.xml 改成logback-spring.xml
  */
-@SpringBootApplication
+@SpringBootApplicationNoDataSources
 public class LogApplicationTest {
     public static void main(String[] args){
         ConfigurableApplicationContext applicationContext = SpringApplication.run(LogApplicationTest.class,args);
@@ -29,7 +30,15 @@ public class LogApplicationTest {
         logger.info("这是一个log4j测试 "+logger.getClass());
         logger.warn("警告");
         logger.error("错误");
-
+        try {
+//            int i = 1/0;
+            Integer a = null;
+            a.compareTo(1);// 空指针错误
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("史诗级错误{}",e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
         applicationContext.stop();
 
     }
