@@ -20,7 +20,31 @@
             count = #{count}
         WHERE id = #{id}
     </update>
+<!--    <update id="reduceUser">-->
+<!--        update test_user-->
+<!--        SET-->
+<!--            count = count-1-->
+<!--        WHERE id = #{id}-->
+<!--    </update>-->
+
+    <update id="reduceUser">
+        update test_user a
+        SET
+            a.count = ( select c.count from (select b.count from test_user b  where b.id = #{id}) c ORDER by c.count)- 1
+        WHERE a.id = #{id}
+    </update>
+
+<!--    <update id="reduceUser">-->
+<!--        SELECT @userCount := count FROM test_user WHERE id = 1;-->
+<!--        update test_user-->
+<!--        SET-->
+<!--            count = @userCount-1-->
+<!--        WHERE id = 1;-->
+<!--    </update>-->
     <select id="selectUserById" resultType="com.spring.test.chapter6.chapter6.User" parameterType="java.lang.String" >
         select * from test_user where id = #{id}
+    </select>
+    <select id="selectTc" resultType="java.lang.String">
+        select @@session.transaction_isolation
     </select>
 </mapper>

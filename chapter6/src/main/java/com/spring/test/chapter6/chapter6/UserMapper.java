@@ -12,7 +12,10 @@ import java.util.List;
 public interface UserMapper {
     List<User> selectUser();
     int updateUser(User user);
+    int reduceUser(User user);
     int insertUser(User user);
 
     User selectUserById(String id);
+
+    String selectTc();
 }

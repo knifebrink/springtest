@@ -1,5 +1,6 @@
 package com.spring.test.chapter6.chapter6;
 
+import com.zaxxer.hikari.pool.HikariPool;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,34 +43,57 @@ public class Chapter6Test {
      * 所以都解决不了
      */
     int kkkk = 0;
+    boolean showE = true;
+//    @Autowired
+//    HikariPool hikariPool;
     @Test
     public void testMore(){
-        userService.reduceCount();
+//        userService.reduceCount();
 
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 try {
-                    userService.reduceCount();
-                }catch (Exception e){kkkk++;}
+                    userService.reduceCount2();
+                }catch (Exception e){kkkk++;
+//                    e.printStackTrace();
+                    if(showE){
+                        e.printStackTrace();
+                        showE = false;
+                    }
+                }
             }
         };
-        int i = 100;
+        int i = 1000;
         int k = 0;
         while (i-->0){
-            new Thread(runnable).start();
+
+            Thread thread = new Thread(runnable);
+            thread.setName("reduceCount");
+            thread.start();
             k++;
         }
 
-
+        System.out.println("------------:"+k+" "+kkkk+" "+        Thread.activeCount());
         try {
-            Thread.sleep(5000);
+            Thread.sleep(50000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("------------:"+k+" "+kkkk);
+        for (Thread thread : Thread.getAllStackTraces().keySet()) {
+            if(thread.getName().endsWith("reduceCount"))
+                System.out.println(thread.getName());
+        }
+        System.out.println("------------:"+k+" "+kkkk+" "+        Thread.activeCount() );
     }
 
+    /**
+     * 不能同步的原因，好像不管哪一个，都无法解决这个问题
+     * 即使是采用内存赋值，也是不能同步的
+     * 1. 在未完全插入的时候，已经读取了原有的值
+     * 即 T1    a  b  c  同时读取了i=2，同时插入了i=1 。 这就是第二类丢失更新
+     *
+     */
     @Autowired
     UserBatch userBatch;
     /**
