@@ -51,6 +51,9 @@ mybatis:
   mapper-locations:
     - classpath:mapper/*.xml
     - classpath:com/spring/test/chapter6/*.xml
+  configuration:
+    cache-enabled: false
+    localCacheScope: statement
 
 management:
   endpoints:
