@@ -1,6 +1,8 @@
 package com.spring.test.chapter6.mybatis;
 
 import cn.hutool.core.io.FileUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.spring.test.chapter6.chapter6.User;
 import com.spring.test.chapter6.redis.RedisApplication;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -48,6 +50,9 @@ public class MybatisApplication {
 //        logger.warn("这是测试sql标签 带参数：{}",userMapper2.selectUserSqlIncludeWithParams(new User("aaa",2)));
         logger.warn("这是测试sql标签 带参数2：{}",userMapper2.selectUserSqlIncludeWithParams2(new User("aaa",2)));
 //        testLongSql();
+        // 需要进行一定延时，插件才生效
+
+
         sqlSessionTemplate.getConfiguration().getDefaultExecutorType();
         logger.warn(""+sqlSessionTemplate.getExecutorType());
     }
@@ -61,6 +66,27 @@ public class MybatisApplication {
             stringBuilder.append(",");
         }
         logger.warn("这是测试超长sql：{}",userMapper2.countTestLongSql(list));
+    }
+
+    // 分页插件测试，需要延迟执行
+    private void testPageHelper(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                    int pageNum = 1;
+                    int pageSize = 2;
+                    PageHelper.startPage(pageNum,pageSize);
+                    List<User> userList = userMapper2.selectUser();
+                    long total = new PageInfo<>(userList).getTotal();
+                    logger.warn("这是测试pageHelper分页插件: 总数为 {} ，{}",total,userList);
+                } catch (InterruptedException ignore) {
+                }
+
+            }
+        }).start();
+
     }
 
     @Autowired

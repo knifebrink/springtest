@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8089
 
 spring:
   datasource:
@@ -54,6 +54,13 @@ mybatis:
   configuration:
     cache-enabled: false
     localCacheScope: statement
+
+# 分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 
 management:
   endpoints:
