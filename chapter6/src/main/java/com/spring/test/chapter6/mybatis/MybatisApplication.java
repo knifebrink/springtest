@@ -1,6 +1,7 @@
 package com.spring.test.chapter6.mybatis;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.spring.test.chapter6.chapter6.User;
@@ -51,7 +52,9 @@ public class MybatisApplication {
         logger.warn("这是测试sql标签 带参数2：{}",userMapper2.selectUserSqlIncludeWithParams2(new User("aaa",2)));
 //        testLongSql();
         // 需要进行一定延时，插件才生效
-
+//        testPageHelper();
+        // 一对多对象的时候还是比较容易出错的，有可能会在其他列表中产生脏数据
+        logger.warn("这是测试多collection标签：{}",JSONUtil.toJsonStr(userMapper2.selectUserTestCollection2()));
 
         sqlSessionTemplate.getConfiguration().getDefaultExecutorType();
         logger.warn(""+sqlSessionTemplate.getExecutorType());

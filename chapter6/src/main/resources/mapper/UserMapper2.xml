@@ -73,9 +73,31 @@
             <result column="userId" property="userId" jdbcType="INTEGER" />
         </collection>
     </resultMap>
-<!--  测试collection  -->
+    <!--  测试collection  -->
     <select id="selectUserTestCollection" resultMap="userInListMap">
         select a.*,b.moneyId, b.money ,b.userId from test_user a left join test_user_money_2 b on a.id = b.userId
+    </select>
+    <!--  测试collection  对象中包含多个集合-->
+    <resultMap id="userInListMap2" type="com.spring.test.chapter6.mybatis.UserInList">
+        <id property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <collection property="moneyList" javaType="java.util.ArrayList" ofType="com.spring.test.chapter6.mybatis.UserMoney2">
+            <id column="moneyId" property="moneyId" jdbcType="INTEGER" />
+            <result column="money" property="money" jdbcType="INTEGER" />
+            <result column="userId" property="userId" jdbcType="INTEGER" />
+        </collection>
+        <collection property="linList" javaType="java.util.List" ofType="com.spring.test.chapter6.mybatis.UserLin">
+            <id column="lin_id" property="linId" jdbcType="INTEGER" />
+            <result column="lin" property="lin" jdbcType="INTEGER" />
+            <result column="userId" property="userId" jdbcType="INTEGER" />
+        </collection>
+    </resultMap>
+    <select id="selectUserTestCollection2" resultMap="userInListMap2">
+        select a.*,b.moneyId, b.money ,b.userId,c.*
+            from test_user a
+            left join test_user_money_2 b on a.id = b.userId
+            left join test_user_lin c on a.id = c.userId
+        order by a.id
     </select>
 
     <insert id="insertUserTestTrim" parameterType="com.spring.test.chapter6.chapter6.User" >

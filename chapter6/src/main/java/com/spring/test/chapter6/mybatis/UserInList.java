@@ -20,4 +20,5 @@ public class UserInList {
         this.userName = userName;
         this.count = count;
     }
+    private List<UserLin> linList;
 }
