@@ -1,6 +1,7 @@
 package com.spring.test.chapter6.springbase;
 
 import com.spring.test.chapter6.rabbitMq.RabbitMqApplication;
+import com.spring.test.chapter6.utils.SpringBootApplicationNoDataSources;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,7 @@ import javax.annotation.PostConstruct;
  * 默认情况下，Spring 使用SimpleAsyncTaskExecutor去执行这些异步方法（此执行器没有限制线程数）。此默认值可以从两个层级进行覆盖
  * https://blog.csdn.net/xiaoxiaole0313/article/details/104666789
  */
-@SpringBootApplication
+@SpringBootApplicationNoDataSources
 @Slf4j
 public class SpringBaseApplication {
     public static void main(String[] args){

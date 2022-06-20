@@ -46,6 +46,10 @@ spring:
     publisher-confirms: true #如果对异步消息需要回调必须设置为true
   profiles:
     include: password
+  jackson:
+    #日期类型格式化
+    date-format: yyyy-MM-dd HH:mm:ss
+
 
 mybatis:
   mapper-locations:
