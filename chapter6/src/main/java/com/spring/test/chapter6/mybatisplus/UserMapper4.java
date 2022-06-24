@@ -9,4 +9,8 @@
 //
 //public interface UserMapper4 extends BaseMapper<TestUser> {
 //    List<User> selectUser(Page<TestUser> page);
+//
+//    List<User> selectUserLeftJoin(Page<TestUser> page);
+//    List<User> selectUserLeftJoin2(Page<TestUser> page);
+//    List<User> selectUserLeftJoin3();
 //}

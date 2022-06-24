@@ -52,7 +52,7 @@ public class MybatisApplication {
         logger.warn("这是测试sql标签 带参数2：{}",userMapper2.selectUserSqlIncludeWithParams2(new User("aaa",2)));
 //        testLongSql();
         // 需要进行一定延时，插件才生效
-//        testPageHelper();
+        testPageHelper();
         // 一对多对象的时候还是比较容易出错的，有可能会在其他列表中产生脏数据
         logger.warn("这是测试多collection标签：{}",JSONUtil.toJsonStr(userMapper2.selectUserTestCollection2()));
 
@@ -71,7 +71,7 @@ public class MybatisApplication {
         logger.warn("这是测试超长sql：{}",userMapper2.countTestLongSql(list));
     }
 
-    // 分页插件测试，需要延迟执行
+//     分页插件测试，需要延迟执行
     private void testPageHelper(){
         new Thread(new Runnable() {
             @Override

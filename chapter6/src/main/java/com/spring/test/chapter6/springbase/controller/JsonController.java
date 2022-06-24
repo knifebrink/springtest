@@ -27,14 +27,14 @@ import java.util.TimeZone;
 public class JsonController {
     @RequestMapping("/getModel")
     @ResponseBody // 转换成Json
-    public SpringJsonModel getBaseModel( SpringJsonModel input){
+    public SpringJsonModel getBaseModel(@RequestBody SpringJsonModel input){
         SpringJsonModel model = new SpringJsonModel();
-        model.setDate(new Date());
-        model.setLocalDate(LocalDate.now());
-        model.setLocalDateTime(LocalDateTime.now());
+//        model.setDate(new Date());
+//        model.setLocalDate(LocalDate.now());
+//        model.setLocalDateTime(LocalDateTime.now());
         log.warn("时区:{}", TimeZone.getDefault());
         log.warn("入参:{}",input);
-        return model;
+        return input;
     }
 
     @Autowired

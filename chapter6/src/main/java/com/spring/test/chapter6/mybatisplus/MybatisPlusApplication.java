@@ -63,6 +63,9 @@
 //        logger.info("分页查询结果：{} 总长度为{}",userMapper4.selectUser(page),page.getTotal());
 //
 //
+//        // 分页有点奇怪的
+//        Page<TestUser> page2 = new Page<>(2, 3);
+//        logger.info("分页查询结果：{} 总长度为{}",userMapper4.selectUserLeftJoin3(),page.getTotal());
 //    }
 //
 //    // 增加mybatis-plus的分页插件

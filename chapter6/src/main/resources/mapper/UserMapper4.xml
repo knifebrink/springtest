@@ -7,7 +7,16 @@
         select * from test_user
     </select>
 
+    <select id="selectUserLeftJoin" resultType="com.spring.test.chapter6.chapter6.User">
+        select a.* from test_user a left join test_user_money b on b.userId = a.id
+        where a.id > 0
+    </select>
 
+    <select id="selectUserLeftJoin2" resultType="com.spring.test.chapter6.chapter6.User">
+        select cc.* from (select a.* from test_user a left join test_user_money b on b.userId = a.id where b.id > 1) cc
+    </select>
 
-
+    <select id="selectUserLeftJoin3" resultType="com.spring.test.chapter6.chapter6.User">
+        select cc.* from (select a.* from test_user a left join test_user_money b on b.userId = a.id where b.id > 1) cc
+    </select>
 </mapper>
