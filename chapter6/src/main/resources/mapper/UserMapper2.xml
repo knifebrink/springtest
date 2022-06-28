@@ -160,5 +160,8 @@
             #{item}
         </foreach>
     </select>
+    <select id="selectTestCount" resultType="java.lang.Long">
+        select count(1) from test_user where id =#{id} and userName =#{name}
+    </select>
 
 </mapper>

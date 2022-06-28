@@ -69,4 +69,6 @@ public interface UserMapper2 {
 
     Integer countTestLongSql(List<Long> list);
 
+    Long selectTestCount(@Param("id") String id,@Param("name") String name);
+
 }
