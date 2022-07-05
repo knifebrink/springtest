@@ -120,6 +120,11 @@
         </trim>
     </insert>
 
+    <insert id="insertUser3">
+        insert into test_user_3(id, userName,count)
+        values(null, #{userName}, #{count})
+    </insert>
+
     <!--使用IF标签-->
     <select id="selectUserChooseWhen" parameterType="java.lang.Integer" resultType="com.spring.test.chapter6.chapter6.User">
         select * from test_user

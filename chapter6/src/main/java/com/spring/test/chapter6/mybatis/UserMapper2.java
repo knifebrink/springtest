@@ -71,4 +71,5 @@ public interface UserMapper2 {
 
     Long selectTestCount(@Param("id") String id,@Param("name") String name);
 
+    int insertUser3(User user);
 }
