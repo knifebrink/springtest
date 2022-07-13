@@ -18,13 +18,13 @@ import java.util.List;
  * 重复插入一千次 23秒
  * sql语句批量插入 93ms ....
  */
-@SpringBootApplication(exclude = {
-        MongoAutoConfiguration.class,
-        RedisAutoConfiguration.class,
-        RedisRepositoriesAutoConfiguration.class,
-        RabbitAutoConfiguration.class
-
-})
+//@SpringBootApplication(exclude = {
+//        MongoAutoConfiguration.class,
+//        RedisAutoConfiguration.class,
+//        RedisRepositoriesAutoConfiguration.class,
+//        RabbitAutoConfiguration.class
+//
+//})
 @Slf4j
 public class MybatisProApplication {
     public static void main(String[] args){

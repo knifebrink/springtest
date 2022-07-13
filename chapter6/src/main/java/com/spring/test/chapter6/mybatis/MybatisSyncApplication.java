@@ -16,13 +16,13 @@ import javax.annotation.PostConstruct;
  * @author andgo
  * @date 2022/7/4
  */
-@SpringBootApplication(exclude = {
-        MongoAutoConfiguration.class,
-        RedisAutoConfiguration.class,
-        RedisRepositoriesAutoConfiguration.class,
-        RabbitAutoConfiguration.class,
-
-})
+//@SpringBootApplication(exclude = {
+//        MongoAutoConfiguration.class,
+//        RedisAutoConfiguration.class,
+//        RedisRepositoriesAutoConfiguration.class,
+//        RabbitAutoConfiguration.class,
+//
+//})
 public class MybatisSyncApplication {
 
     public static void main(String[] args){

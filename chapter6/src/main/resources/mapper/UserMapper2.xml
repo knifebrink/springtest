@@ -169,4 +169,17 @@
         select count(1) from test_user where id =#{id} and userName =#{name}
     </select>
 
+    <resultMap id="selectThreeByIdResultMap" type="com.spring.test.chapter6.mybatis.UserThree">
+        <id property="id" column="id"/>
+        <result property="jsonTest" column="json_test" typeHandler="com.spring.test.chapter6.mybatis.UserThreeTypeHandler"/>
+    </resultMap>
+    <select id="selectThreeById" resultMap="selectThreeByIdResultMap">
+        select id,userName,json_test from test_user_3 where id = #{id}
+    </select>
+
+    <insert id="insertUserThree">
+        insert into test_user_3(id,json_test)
+        values(#{id},#{jsonTest,jdbcType=VARCHAR,typeHandler = com.spring.test.chapter6.mybatis.UserThreeTypeHandler})
+    </insert>
+
 </mapper>
