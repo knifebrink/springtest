@@ -11,6 +11,7 @@ public class User {
     private String id;
     private int count;
     private String userName;
+    private String bk;
     public User(){}
     public User(String userName,int count){
         this.userName = userName;

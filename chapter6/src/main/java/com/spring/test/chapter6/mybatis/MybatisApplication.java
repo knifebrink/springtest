@@ -24,7 +24,7 @@ import java.util.List;
  * @author brink
  * 2022/1/13 15:56
  */
-@SpringBootApplication(exclude = {MongoAutoConfiguration.class})
+//@SpringBootApplication(exclude = {MongoAutoConfiguration.class})
 public class MybatisApplication {
     public static void main(String[] args){
         SpringApplication.run(MybatisApplication.class,args);

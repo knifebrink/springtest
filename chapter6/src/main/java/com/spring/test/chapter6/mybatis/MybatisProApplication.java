@@ -18,13 +18,13 @@ import java.util.List;
  * 重复插入一千次 23秒
  * sql语句批量插入 93ms ....
  */
-//@SpringBootApplication(exclude = {
-//        MongoAutoConfiguration.class,
-//        RedisAutoConfiguration.class,
-//        RedisRepositoriesAutoConfiguration.class,
-//        RabbitAutoConfiguration.class
-//
-//})
+@SpringBootApplication(exclude = {
+        MongoAutoConfiguration.class,
+        RedisAutoConfiguration.class,
+        RedisRepositoriesAutoConfiguration.class,
+        RabbitAutoConfiguration.class
+
+})
 @Slf4j
 public class MybatisProApplication {
     public static void main(String[] args){
@@ -35,10 +35,10 @@ public class MybatisProApplication {
 
     @Autowired
     UserProMapper userProMapper;
-//    @PostConstruct
+    @PostConstruct
     public void fun(){
-        test1();
-        test2();
+//        test1();
+        test3();
     }
 
     public void test1(){
@@ -59,5 +59,11 @@ public class MybatisProApplication {
         }
         userProMapper.insertUserBatch(list);
         log.warn("批量插入时间是：{}",System.currentTimeMillis() - time);
+    }
+
+    public void test3(){
+        for (int i=0;i<2000;i++){
+            test2();
+        }
     }
 }
