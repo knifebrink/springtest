@@ -26,10 +26,22 @@
 <!--    </bean>-->
 
 
-    <bean id="son" class="com.spring.test.springtest.springtest.Son">
+    <bean id="son" class="com.spring.test.springtest.springtest.Son" >
         <property name="dad" ref="dad"/>
     </bean>
 
+<!--    <bean id="mon"  class="com.spring.test.springtest.springtest.Mon">-->
+
+    <bean id="looo" class="com.spring.test.springtest.springtest.Looo" >
+    </bean>
+    <!--配置AOP-->
+<!--    <aop:config>-->
+<!--        &lt;!&ndash;配置切面 &ndash;&gt;-->
+<!--        <aop:aspect id="logAdvice" ref="looo">-->
+<!--            &lt;!&ndash; 配置通知的类型，并且建立通知方法和切入点方法的关联&ndash;&gt;-->
+<!--            <aop:before method="log" pointcut="execution(* com.spring.test.springtest.springtest.*.*(..))"></aop:before>-->
+<!--        </aop:aspect>-->
+<!--    </aop:config>-->
 
 
 

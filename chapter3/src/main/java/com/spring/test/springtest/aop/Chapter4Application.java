@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Bean;
 public class Chapter4Application {
 
     @Autowired
-    UserService userService;
+    public UserService userService;
     @Bean
     public MyAspect initAspect(){
         return new MyAspect();
@@ -27,6 +27,7 @@ public class Chapter4Application {
     public static void main(String[] args){
         ApplicationContext context = SpringApplication.run(Chapter4Application.class,args);
         Chapter4Application object = new Chapter4Application();
+        object.userService = context.getBean(Chapter4Application.class).userService;
         System.out.println("-----开始");
         context.getBean(Chapter4Application.class).userService.printUser(new User());
         System.out.println("---开始新一轮测试，异常");

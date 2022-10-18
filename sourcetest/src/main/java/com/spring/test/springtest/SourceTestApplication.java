@@ -2,6 +2,7 @@ package com.spring.test.springtest;
 
 //import com.spring.test.sourcetest.controller.TestController;
 import com.spring.test.springtest.controller.User;
+import com.spring.test.springtest.controller.User2;
 import org.springframework.asm.ClassReader;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.factory.BeanFactory;
@@ -24,12 +25,14 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.SpringVersion;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.classreading.*;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Set;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.spring.test.springtest.controller")
+@EnableAsync
 public class SourceTestApplication {
 
 	/**
@@ -72,7 +75,7 @@ public class SourceTestApplication {
 	 *
 	 * createBeanInstance：例化，其实也就是调用对象的构造方法实例化对象
 	 * populateBean：填充属性，这一步主要是对bean的依赖属性进行注入(@Autowired)
-	 * initializeBean：回到一些形如initMethod、InitializingBean等方法
+	 * initializeBean：回到一些形如initMethod、InitializingBean等方法，以及生成aop等代理
 	 *
 	 */
 	/**
@@ -139,6 +142,7 @@ public class SourceTestApplication {
 		AnnotationConfigServletWebServerApplicationContext aContext = (AnnotationConfigServletWebServerApplicationContext) context;
 //		System.out.println("获取的实例对象："+aContext.getBean(TestController.class));
 		try {
+			User2 user2 = context.getBean(User2.class);
 			System.out.println("获取的实例对象：" + context.getBean(User.class));
 		}catch (Exception e){}
 		ConfigurableListableBeanFactory beanFactory=context.getBeanFactory();
