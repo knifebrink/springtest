@@ -1,5 +1,6 @@
 package com.spring.test.chapter6.utils;
 
+import org.redisson.spring.starter.RedissonAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
@@ -19,6 +20,8 @@ import java.lang.annotation.*;
         MongoAutoConfiguration.class,
 //        禁止redis自动装配
         RedisAutoConfiguration.class,
+        // 禁止Redisson
+        RedissonAutoConfiguration.class,
         RedisRepositoriesAutoConfiguration.class,
 //        禁止rabbitmq自动装配
         RabbitAutoConfiguration.class}
