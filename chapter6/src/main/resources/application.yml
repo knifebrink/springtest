@@ -76,7 +76,7 @@ logging:
   level:
 #    root: info
     com.spring.test.chapter6: debug
-    com.spring.test.chapter6.chapter6: info
+    com.spring.test.chapter6.chapter6: debug
 
 fch:
   ccc: aaa

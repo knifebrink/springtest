@@ -143,6 +143,7 @@
 			<artifactId>redisson-spring-boot-starter</artifactId>
 			<version>3.14.1</version>
 		</dependency>
+
 <!--	swagger	-->
 		<dependency>
 			<groupId>com.github.xiaoymin</groupId>
