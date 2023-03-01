@@ -51,6 +51,7 @@ public class RedisConfig {
 		redisTemplate.setValueSerializer(stringRedisSerializer);// 设置值的序列器
 	    redisTemplate.setHashKeySerializer(stringRedisSerializer);
 	    redisTemplate.setHashValueSerializer(stringRedisSerializer);
+		System.out.println("生成redisTemplate");
 	  return redisTemplate;
 	}
 }

@@ -105,7 +105,6 @@ public class RedisApplication {
         redisTemplate.setValueSerializer(stringSerializer);
         redisTemplate.setHashKeySerializer(stringSerializer);
         redisTemplate.setHashValueSerializer(stringSerializer);
-
     }
 //	// 需要处理底层的转换规则，如果不考虑改写底层，尽量不使用它
 //	public static void useRedisCallback(RedisTemplate redisTemplate) {
