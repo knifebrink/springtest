@@ -7,12 +7,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SessionCallback;
 
 import java.util.*;
 
 /**
  * redis常用结构测试
+ * https://blog.csdn.net/xpsallwell/article/details/84030285
  */
 @SpringBootTest(classes = RedisApplication.class)
 @Slf4j
@@ -73,13 +77,12 @@ public class RedisTest {
         String setKey = "set:";
         String setKey1 = setKey + "1";
         redisTemplate2.delete(setKey1);
-        redisTemplate2.opsForSet().add(setKey1,"a");
-        redisTemplate2.opsForSet().add(setKey1,"a");
-        redisTemplate2.opsForSet().add(setKey1,"b");
-        redisTemplate2.opsForSet().add(setKey1,"c");
+        redisTemplate2.opsForSet().add(setKey1, "a");
+        redisTemplate2.opsForSet().add(setKey1, "a");
+        redisTemplate2.opsForSet().add(setKey1, "b");
+        redisTemplate2.opsForSet().add(setKey1, "c");
         Set<String> set = redisTemplate2.opsForSet().members(setKey1);
         log.warn("set：{}", set);
-
 
 
         // 有序集合zset
@@ -87,14 +90,66 @@ public class RedisTest {
         String zSetKey1 = zSetKey + "1";
         redisTemplate2.delete(zSetKey1);
 
-        redisTemplate2.opsForZSet().add(zSetKey1,"a",80);
-        redisTemplate2.opsForZSet().add(zSetKey1,"a",99);
-        redisTemplate2.opsForZSet().add(zSetKey1,"b",98);
-        redisTemplate2.opsForZSet().add(zSetKey1,"c",97);
-        redisTemplate2.opsForZSet().add(zSetKey1,"d",100);
-        Object zSetO = redisTemplate2.opsForZSet().rangeWithScores(zSetKey1,0,-1);
-        Object zSetO2 = redisTemplate2.opsForZSet().range(zSetKey1,0,-1);
+        redisTemplate2.opsForZSet().add(zSetKey1, "a", 80);
+        redisTemplate2.opsForZSet().add(zSetKey1, "a", 99);
+        redisTemplate2.opsForZSet().add(zSetKey1, "b", 98);
+        redisTemplate2.opsForZSet().add(zSetKey1, "c", 97);
+        redisTemplate2.opsForZSet().add(zSetKey1, "d", 100);
+        Object zSetO = redisTemplate2.opsForZSet().rangeWithScores(zSetKey1, 0, -1);
+        Object zSetO2 = redisTemplate2.opsForZSet().range(zSetKey1, 0, -1);
         log.warn("zSetO：{}", JSON.toJSONString(zSetO));
         log.warn("zSetO2：{}", JSON.toJSONString(zSetO2));
+    }
+
+
+    // 测试一个连接多次执行的性能
+    // 结论：execute不会几何级增加，批量执行有效
+    @Test
+    public void test2() {
+        String zSetKey = "zSet:";
+        String zSetKey1 = zSetKey + "1";
+        redisTemplate2.opsForZSet().score(zSetKey1, "a"); // 预先连接，排除这些时间
+
+        long time = System.currentTimeMillis();
+        ArrayList<Object> alist = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            alist.add(redisTemplate2.opsForZSet().score(zSetKey1, "a"));
+        }
+        log.warn("执行的时间是：{}", (System.currentTimeMillis() - time));
+        log.warn("输出：{}", JSON.toJSONString(alist));
+
+        log.warn("--------------");
+        alist.clear();
+        time = System.currentTimeMillis();
+
+        redisTemplate2.execute(new SessionCallback() {
+            @Override
+            public String execute(RedisOperations rt) throws DataAccessException {
+                for (int i = 0; i < 100; i++) {
+                    alist.add(rt.opsForZSet().score( zSetKey1, "a"));
+                }
+                return null;
+            }
+        });
+        log.warn("批量执行的时间是：{}", (System.currentTimeMillis() - time));
+        log.warn("输出：{}", JSON.toJSONString(alist));
+        log.warn("--------------");
+
+        alist.clear();
+
+        time = System.currentTimeMillis();
+        redisTemplate2.executePipelined(new SessionCallback<Object>() {
+            @Override
+            public <K, V> Object execute(RedisOperations<K, V> operations) throws DataAccessException {
+                for (int i = 0; i < 100; i++) {
+                    alist.add(operations.opsForZSet().score((K) zSetKey1, "a"));
+                }
+                return null;
+            }
+        });
+        log.warn("批量执行的时间是：{}", (System.currentTimeMillis() - time));
+        log.warn("输出：{}", JSON.toJSONString(alist));
+
+
     }
 }
