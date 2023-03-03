@@ -103,53 +103,104 @@ public class RedisTest {
 
 
     // 测试一个连接多次执行的性能
-    // 结论：execute不会几何级增加，批量执行有效
+    // 结论：execute不会几何级增加，批量执行有效，奇怪没错。
+    /**
+     * 结论：
+     * 普通的批量执行没什么区别
+     *RedisTemplate每执行一个方法，就意味着从Redis连接池中获取一条连接，使用SessionCallBack接口后，就意味着所有的操作都来自同一条Redis连接，避免了命令在不同连接上执行。
+     * 因为事务或者流水线执行命令都先缓存到一个队列里，所以在执行方法后并不会马上返回结果，结果是通过最后的一次性执行返回的，这点在使用的时候要注意。
+     * 在需要保证数据一致性的情况下，要使用事务。
+     * 在需要执行多个命令时，可以使用流水线，它让命令缓存到一个队列，然后一次性发给Redis服务器执行，从而提高性能
+     *
+     * 引用
+     */
     @Test
     public void test2() {
         String zSetKey = "zSet:";
         String zSetKey1 = zSetKey + "1";
         redisTemplate2.opsForZSet().score(zSetKey1, "a"); // 预先连接，排除这些时间
+        long loopCount = 1000;
 
+        // 直接执行
         long time = System.currentTimeMillis();
-        ArrayList<Object> alist = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        List<Object> alist = new ArrayList<>();
+        for (int i = 0; i < loopCount; i++) {
             alist.add(redisTemplate2.opsForZSet().score(zSetKey1, "a"));
         }
         log.warn("执行的时间是：{}", (System.currentTimeMillis() - time));
         log.warn("输出：{}", JSON.toJSONString(alist));
-
         log.warn("--------------");
         alist.clear();
-        time = System.currentTimeMillis();
 
-        redisTemplate2.execute(new SessionCallback() {
+
+        time = System.currentTimeMillis();
+        // 执行多个命令
+        Object result2 = redisTemplate2.execute(new SessionCallback() { // 很奇怪，并不能提高速度
             @Override
             public String execute(RedisOperations rt) throws DataAccessException {
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < loopCount; i++) {
                     alist.add(rt.opsForZSet().score( zSetKey1, "a"));
+                    if (i == 0){
+                        log.warn("输出 i = 0时：{}", JSON.toJSONString(alist));
+                    }
                 }
                 return null;
             }
         });
-        log.warn("批量执行的时间是：{}", (System.currentTimeMillis() - time));
+        log.warn("普通批量执行的时间是：{}", (System.currentTimeMillis() - time));
         log.warn("输出：{}", JSON.toJSONString(alist));
+        log.warn("输出：{}", JSON.toJSONString(result2));
         log.warn("--------------");
-
         alist.clear();
-
         time = System.currentTimeMillis();
-        redisTemplate2.executePipelined(new SessionCallback<Object>() {
+
+        // 流水线
+
+        List<Object> cList = new ArrayList<>();
+        Object o = redisTemplate2.executePipelined(new SessionCallback<Object>() {
             @Override
             public <K, V> Object execute(RedisOperations<K, V> operations) throws DataAccessException {
-                for (int i = 0; i < 100; i++) {
-                    alist.add(operations.opsForZSet().score((K) zSetKey1, "a"));
+                ArrayList<Object> cList = new ArrayList<>();
+                for (int i = 0; i < loopCount; i++) {
+                    cList.add(operations.opsForZSet().score((K) zSetKey1, "a"));
+                    if (i == 0){
+                        log.warn("输出 i = 0时：{}", JSON.toJSONString(alist));
+                    }
                 }
+
+                operations.opsForZSet().score((K) zSetKey1, "b");
                 return null;
             }
         });
-        log.warn("批量执行的时间是：{}", (System.currentTimeMillis() - time));
+        log.warn("流水线批量执行的时间是：{}", (System.currentTimeMillis() - time));
         log.warn("输出：{}", JSON.toJSONString(alist));
+        log.warn("输出：{}", JSON.toJSONString(o));
+        log.warn("--------------");
+        time = System.currentTimeMillis();
 
+        // 事务
+        Object result4 = redisTemplate2.execute(new SessionCallback<Object>() {
+            @Override
+            public <K, V> Object execute(RedisOperations<K, V> operations) throws DataAccessException {
+                operations.watch((K) zSetKey1);
+                operations.multi();
+                // 命令不会马上执行
+                List<Object> dList = new ArrayList<>();
+                for (int i = 0; i < loopCount; i++) {
 
+                    dList.add(operations.opsForZSet().score((K) zSetKey1, "a"));
+                    if (i == 0){
+                        log.warn("输出 i = 0时：{}", JSON.toJSONString(alist));
+                    }
+                }
+
+                Object result = operations.exec();
+                return result;
+            }
+        });
+        log.warn("事务批量执行的时间是：{}", (System.currentTimeMillis() - time));
+        log.warn("输出：{}", JSON.toJSONString(result4));
+
+        time = System.currentTimeMillis();
     }
 }
