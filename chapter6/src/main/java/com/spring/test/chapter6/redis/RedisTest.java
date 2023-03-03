@@ -203,4 +203,26 @@ public class RedisTest {
 
         time = System.currentTimeMillis();
     }
+
+
+    @Test
+    // 流水线其他测试
+    public void test3(){
+        String key = "test3:";
+        SessionCallback sessionCallback = new SessionCallback<Object>() {
+            @Override
+            public Object execute(RedisOperations operations) throws DataAccessException {
+                operations.opsForValue().set("test3:s:"+1,"abc");
+                operations.opsForValue().get("test3:s:"+1);
+                operations.opsForValue().get("test3:s:"+1);
+                operations.opsForZSet().score("zSet:1","a");
+                operations.opsForZSet().score("zSet:2","k");
+                operations.opsForZSet().range("zSet:1",0,-1);
+                return null;
+            }
+        };
+        List<Object> o = redisTemplate2.executePipelined(sessionCallback);
+        System.out.println("" + JSON.toJSONString(o));
+
+    }
 }
